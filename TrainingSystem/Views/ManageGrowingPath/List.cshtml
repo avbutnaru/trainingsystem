@@ -1,0 +1,33 @@
+﻿@model TrainingSystem.Models.ManageGrowingPathListViewModel
+@{
+    ViewBag.Title = "Manage your growing paths";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+@{
+    if (Model.GrowingPaths.Count > 0)
+    {
+        <h4>Growing Paths</h4>
+        <table class="table">
+            <tbody>
+            @foreach (var growingPath in Model.GrowingPaths)
+            {
+                <tr>
+                    <td>@growingPath.Name</td>
+                    <td>@growingPath.Description</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {@id = growingPath.Id})
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You did not add any growing paths yet!</p>
+    }
+}
+@Html.ActionLink("Add New Growing Path", "Edit")
