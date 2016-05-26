@@ -49,8 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GrowingPath.cs" />
+    <Compile Include="Road.cs" />
+    <Compile Include="RoadMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoadmapXRoad.cs" />
     <Compile Include="TrainingSystemContext.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,33 @@
+﻿@model TrainingSystem.Models.ManageRoadMapListViewModel
+@{
+    ViewBag.Title = "Manage your roadmaps";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+@{
+    if (Model.RoadMaps.Count > 0)
+    {
+        <h4>Roadmaps</h4>
+        <table class="table">
+            <tbody>
+            @foreach (var roadMap in Model.RoadMaps)
+            {
+                <tr>
+                    <td>@roadMap.Name</td>
+                    <td>@roadMap.Description</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {@id = roadMap.Id})
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You did not add any growing paths yet!</p>
+    }
+}
+@Html.ActionLink("Add New Roadmap", "Edit")

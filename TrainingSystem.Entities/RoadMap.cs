@@ -1,13 +1,15 @@
-﻿namespace TrainingSystem.Entities
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TrainingSystem.Entities
 {
-    public class GrowingPath
+    public class RoadMap
     {
-        protected GrowingPath()
+        protected RoadMap()
         {
-            
         }
 
-        public GrowingPath(string name, string description, string userId)
+        public RoadMap(string name, string description, string userId)
         {
             Name = name;
             Description = description;
@@ -19,5 +21,7 @@
         public string Description { get; set; }
 
         public string UserId { get; set; }
+
+        public IList<RoadmapXRoad> RoadmapXRoads { get; set; }
     }
 }

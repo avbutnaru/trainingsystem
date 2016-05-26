@@ -1,14 +1,14 @@
-﻿@model TrainingSystem.Models.ManageGrowingPathViewModel
+﻿@model TrainingSystem.Models.ManageRoadViewModel
 @{
-    ViewBag.Title = "Add / Edit Growing Path";
+    ViewBag.Title = "Add / Edit Road";
 }
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Edit", "ManageGrowingPath", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("EditRoad", "ManageRoadMap", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Add / Edit Growing Path</h4>
+    <h4>Add / Edit Road</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
@@ -24,6 +24,7 @@
         </div>
     </div>
     @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.RoadmapId)
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-default" />

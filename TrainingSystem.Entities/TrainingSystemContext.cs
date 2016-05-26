@@ -10,7 +10,9 @@ namespace TrainingSystem.Entities
         {
         }
 
-        public DbSet<GrowingPath> GrowingPaths { get; set; }
+        public DbSet<RoadMap> RoadMaps { get; set; }
+        public DbSet<Road> Roads { get; set; }
+        public DbSet<RoadmapXRoad> RoadmapXRoads { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

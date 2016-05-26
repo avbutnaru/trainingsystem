@@ -6,8 +6,13 @@ using TrainingSystem.Entities;
 
 namespace TrainingSystem.Models
 {
-    public class ManageGrowingPathViewModel
+    public class ManageRoadMapViewModel
     {
+        public ManageRoadMapViewModel()
+        {
+            Roads = new List<Road>();
+        }
+
         public int? Id { get; set; }
 
         [Required]
@@ -19,10 +24,28 @@ namespace TrainingSystem.Models
         [DataType(DataType.MultilineText)]
         [Display(Name = "Description")]
         public string Description { get; set; }
+
+        public IList<Road> Roads { get; set; }
     }
 
-    public class ManageGrowingPathListViewModel
+    public class ManageRoadMapListViewModel
     {
-        public IList<GrowingPath> GrowingPaths { get; set; }
+        public IList<RoadMap> RoadMaps { get; set; }
+    }
+
+    public class ManageRoadViewModel
+    {
+        public int? Id { get; set; }
+        public int? RoadmapId { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Description")]
+        public string Description { get; set; }
     }
 }
