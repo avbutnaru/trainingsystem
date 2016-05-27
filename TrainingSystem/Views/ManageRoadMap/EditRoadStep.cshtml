@@ -1,0 +1,89 @@
+﻿@model TrainingSystem.Models.ManageRoadStepViewModel
+@{
+    ViewBag.Title = "Add / Edit Road Step";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("EditRoadStep", "ManageRoadMap", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Add / Edit Road Step</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Description, new {@class = "form-control"})
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.RoadId)
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@{
+    if (Model.StepResources.Count > 0)
+    {
+        <h4>Step resources</h4>
+        <table class="table">
+            <tbody>
+                @foreach (var stepResource in Model.StepResources)
+                {
+                    <tr>
+                        <td>@stepResource.Name</td>
+                        <td>@stepResource.Description</td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditStepResource", new { @roadStepId = Model.Id, @id = stepResource.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You did not add any step resources yet!</p>
+    }
+}
+@Html.ActionLink("Add Resource", "EditStepResource", new { @roadStepId = Model.Id })
+<hr />
+@{
+    if (Model.StepExercises.Count > 0)
+    {
+        <h4>Step exercises</h4>
+        <table class="table">
+            <tbody>
+                @foreach (var stepExercise in Model.StepExercises)
+                {
+                    <tr>
+                        <td>@stepExercise.Name</td>
+                        <td>@stepExercise.Description</td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditStepExercise", new { @roadStepId = Model.Id, @id = stepExercise.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You did not add any step exercises yet!</p>
+    }
+}
+@Html.ActionLink("Add Exercise", "EditStepExercise", new { @roadStepId = Model.Id })
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

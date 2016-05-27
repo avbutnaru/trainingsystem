@@ -1,0 +1,34 @@
+﻿@model TrainingSystem.Models.LibraryMainViewModel
+@{
+    ViewBag.Title = "Library";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="jumbotron">
+    @{
+        if (Model.RoadMaps.Count > 0)
+        {
+            <h4>Roadmaps</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var roadMap in Model.RoadMaps)
+                    {
+                        <tr>
+                            <td>@roadMap.Name</td>
+                            <td>@roadMap.Description</td>
+                            <td>
+                                @Html.ActionLink("Details", "RoadMap", new { @id = roadMap.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No roadmaps yet!</p>
+        }
+    }
+</div>

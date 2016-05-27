@@ -31,6 +31,33 @@
         </div>
     </div>
 }
+
+@{
+    if (Model.RoadSteps.Count > 0)
+    {
+        <h4>Road Steps</h4>
+        <table class="table">
+            <tbody>
+                @foreach (var roadStep in Model.RoadSteps)
+                {
+                    <tr>
+                        <td>@roadStep.Name</td>
+                        <td>@roadStep.Description</td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditRoadStep", new { @id = roadStep.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You did not add any road steps yet!</p>
+    }
+}
+@Html.ActionLink("Add Road Step", "EditRoadStep", new { @roadId = Model.Id })
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

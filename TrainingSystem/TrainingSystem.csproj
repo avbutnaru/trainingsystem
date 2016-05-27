@@ -169,6 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\ManageRoadmapController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -176,6 +177,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LibraryViewModels.cs" />
     <Compile Include="Models\ManageGrowingPathViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -239,6 +241,13 @@
     <Content Include="Views\ManageRoadMap\Edit.cshtml" />
     <Content Include="Views\ManageRoadMap\List.cshtml" />
     <Content Include="Views\ManageRoadMap\EditRoad.cshtml" />
+    <Content Include="Views\ManageRoadMap\EditRoadStep.cshtml" />
+    <Content Include="Views\ManageRoadMap\EditStepResource.cshtml" />
+    <Content Include="Views\ManageRoadMap\EditStepExercise.cshtml" />
+    <Content Include="Views\Library\Index.cshtml" />
+    <Content Include="Views\Library\RoadMap.cshtml" />
+    <Content Include="Views\Library\Road.cshtml" />
+    <Content Include="Views\Library\Step.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

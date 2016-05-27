@@ -2,23 +2,23 @@ using System.Collections.Generic;
 
 namespace TrainingSystem.Entities
 {
-    public class Road
+    public class RoadStep
     {
-        protected Road()
+        protected RoadStep()
         {
 
         }
 
-        public Road(string name, string description, string userId, RoadMap roadmap)
+        public RoadStep(string name, string description, string userId, Road road)
         {
             Name = name;
             Description = description;
             UserId = userId;
 
-            if (roadmap != null)
+            if (road != null)
             {
-                RoadmapXRoads = new List<RoadmapXRoad>();
-                RoadmapXRoads.Add(new RoadmapXRoad(roadmap, this));
+                RoadXRoadSteps = new List<RoadXRoadStep>();
+                RoadXRoadSteps.Add(new RoadXRoadStep(road, this));
             }
         }
 
@@ -27,7 +27,8 @@ namespace TrainingSystem.Entities
         public string Description { get; set; }
 
         public string UserId { get; set; }
-        public IList<RoadmapXRoad> RoadmapXRoads { get; set; }
         public IList<RoadXRoadStep> RoadXRoadSteps { get; set; }
+        public IList<StepResource> StepResources { get; set; }
+        public IList<StepExercise> StepExercises { get; set; }
     }
 }

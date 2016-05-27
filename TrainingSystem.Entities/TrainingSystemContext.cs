@@ -11,8 +11,12 @@ namespace TrainingSystem.Entities
         }
 
         public DbSet<RoadMap> RoadMaps { get; set; }
+        public DbSet<RoadStep> RoadSteps { get; set; }
         public DbSet<Road> Roads { get; set; }
+        public DbSet<StepResource> StepResources { get; set; }
+        public DbSet<StepExercise> StepExercises { get; set; }
         public DbSet<RoadmapXRoad> RoadmapXRoads { get; set; }
+        public DbSet<RoadXRoadStep> RoadXRoadSteps { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

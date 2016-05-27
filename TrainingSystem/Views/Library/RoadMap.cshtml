@@ -1,0 +1,39 @@
+﻿@model TrainingSystem.Models.RoadMapMainViewModel
+@{
+    ViewBag.Title = "Road Map";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+<div class="jumbotron">
+    <h3>@Model.RoadMap.Name</h3>
+    <hr/>
+    <p>@Model.RoadMap.Description</p>
+    <hr />
+    @{
+        if (Model.RoadMap.RoadmapXRoads.Count > 0)
+        {
+            <h4>Roads</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var road in Model.RoadMap.RoadmapXRoads)
+                    {
+                        <tr>
+                            <td>@road.Road.Name</td>
+                            <td>@road.Road.Description</td>
+                            <td>
+                                @Html.ActionLink("Details", "Road", new { @id = road.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No roads yet!</p>
+        }
+    }
+</div>

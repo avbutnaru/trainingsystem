@@ -27,7 +27,33 @@
     }
     else
     {
-        <p>You did not add any growing paths yet!</p>
+        <p>You did not add any roadmaps yet!</p>
     }
 }
 @Html.ActionLink("Add New Roadmap", "Edit")
+<hr/>
+
+@{
+    if (Model.RoadSteps.Count > 0)
+    {
+        <h4>Road Steps</h4>
+        <table class="table">
+            <tbody>
+                @foreach (var roadStep in Model.RoadSteps)
+                {
+                    <tr>
+                        <td>@roadStep.Name</td>
+                        <td>@roadStep.Description</td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditRoadStep", new { @id = roadStep.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You did not add any road steps yet!</p>
+    }
+}

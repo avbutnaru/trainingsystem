@@ -1,0 +1,58 @@
+﻿@model TrainingSystem.Models.RoadStepMainViewModel
+@{
+    ViewBag.Title = "Road Step";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+<div class="jumbotron">
+    <h3>@Model.RoadStep.Name</h3>
+    <hr/>
+    <p>@Model.RoadStep.Description</p>
+    <hr />
+    @{
+        if (Model.RoadStep.StepResources.Count > 0)
+        {
+            <h4>Resources</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var step in Model.RoadStep.StepResources)
+                    {
+                        <tr>
+                            <td>@step.Name</td>
+                            <td>@step.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No resources yet!</p>
+        }
+    }
+    <hr />
+    @{
+        if (Model.RoadStep.StepExercises.Count > 0)
+        {
+            <h4>Exercises</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var exercise in Model.RoadStep.StepExercises)
+                    {
+                        <tr>
+                            <td>@exercise.Name</td>
+                            <td>@exercise.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No exercises yet!</p>
+        }
+    }
+</div>
