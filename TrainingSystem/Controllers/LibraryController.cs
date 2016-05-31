@@ -6,7 +6,7 @@ using System.Data.Entity;
 
 namespace TrainingSystem.Controllers
 {
-    public class LibraryController : Controller
+    public class LibraryController : TrainingSystemController
     {
         private TrainingSystemContext db = new TrainingSystemContext();
 
@@ -35,13 +35,21 @@ namespace TrainingSystem.Controllers
             return View(model);
         }
 
-        public ActionResult Step(int id)
+        public ActionResult Step(int id, string message)
         {
             var model = new RoadStepMainViewModel();
             model.RoadStep = db.RoadSteps
                 .Include(p => p.StepResources)
                 .Include(p => p.StepExercises)
                 .FirstOrDefault(p => p.Id == id);
+
+            var student = CurrentStudentWithRoadSteps;
+            if (student != null)
+            {
+                model.StudentXRoadStep = student.StudentXRoadSteps.FirstOrDefault(p => p.RoadStep.Id == model.RoadStep.Id);
+            }
+
+            model.Message = message;
             return View(model);
         }
     }

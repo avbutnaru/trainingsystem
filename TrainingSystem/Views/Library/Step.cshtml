@@ -23,6 +23,7 @@
         }
         else if (Model.StudentXRoadStep.LearningStatus == LearningStatus.StudyingResources)
         {
+            <p class="text-success">Please study the resources, and when you are done click on Finished.</p>
             @Html.ActionLink("Finished studying the resources", "FinishedResources", "Learn", new { @id = Model.RoadStep.Id }, new { })
         }
     <hr />

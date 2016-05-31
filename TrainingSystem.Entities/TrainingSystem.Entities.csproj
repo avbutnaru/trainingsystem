@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetUsers.cs" />
     <Compile Include="Road.cs" />
     <Compile Include="RoadMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,7 +58,10 @@
     <Compile Include="RoadXRoadStep.cs" />
     <Compile Include="StepExercise.cs" />
     <Compile Include="StepResource.cs" />
+    <Compile Include="Student.cs" />
+    <Compile Include="StudentXRoadStep.cs" />
     <Compile Include="TrainingSystemContext.cs" />
+    <Compile Include="TrainingSystemInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
