@@ -1,4 +1,5 @@
-﻿@model TrainingSystem.Models.RoadStepMainViewModel
+﻿@using TrainingSystem.Entities
+@model TrainingSystem.Models.RoadStepMainViewModel
 @{
     ViewBag.Title = "Road Step";
 }
@@ -7,12 +8,25 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 
-<div class="jumbotron">
-    <h3>@Model.RoadStep.Name</h3>
+    <div class="jumbotron">
+        <h3>@Model.RoadStep.Name</h3>
+        <hr />
+<p>@Model.RoadStep.Description</p>
     <hr/>
-    <p>@Model.RoadStep.Description</p>
+        @if (Model.Message != null)
+        {
+            <p class="text-danger">@Model.Message</p>
+        }
+        @if (Model.StudentXRoadStep == null)
+        {
+            @Html.ActionLink("Start learning", "LearnStep", "Learn", new {@id = Model.RoadStep.Id}, new {})
+        }
+        else if (Model.StudentXRoadStep.LearningStatus == LearningStatus.StudyingResources)
+        {
+            @Html.ActionLink("Finished studying the resources", "FinishedResources", "Learn", new { @id = Model.RoadStep.Id }, new { })
+        }
     <hr />
-    @{
+        @{
         if (Model.RoadStep.StepResources.Count > 0)
         {
             <h4>Resources</h4>

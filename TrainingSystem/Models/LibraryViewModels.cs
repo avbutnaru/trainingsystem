@@ -24,5 +24,7 @@ namespace TrainingSystem.Models
     public class RoadStepMainViewModel
     {
         public RoadStep RoadStep { get; set; }
+        public StudentXRoadStep StudentXRoadStep { get; set; }
+        public string Message { get; set; }
     }
 }
