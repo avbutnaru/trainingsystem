@@ -59,6 +59,7 @@
     <Compile Include="StepExercise.cs" />
     <Compile Include="StepResource.cs" />
     <Compile Include="Student.cs" />
+    <Compile Include="StudentResourceRating.cs" />
     <Compile Include="StudentXRoadStep.cs" />
     <Compile Include="TrainingSystemContext.cs" />
     <Compile Include="TrainingSystemInitializer.cs" />

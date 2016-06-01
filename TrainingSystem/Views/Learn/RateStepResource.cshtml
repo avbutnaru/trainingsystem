@@ -1,0 +1,33 @@
+﻿@using TrainingSystem.Entities
+@model TrainingSystem.Models.RateStepContentViewModel
+@{
+    ViewBag.Title = "Rate Road Step Content";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+    <div class="jumbotron">
+        <h3>
+            @Model.RoadStep.Name
+        </h3>
+        <hr />
+<p>@Model.RoadStep.Description</p>
+    <hr/>
+        @using (Html.BeginForm("RateStepResource", "Learn", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(p => p.RoadStepId)
+            <table>
+                @Html.EditorFor(x => x.StepResourceRatings)
+            </table>
+
+            <hr />
+            <p>Was there any topic that you encountered in the resources which was not easy enough to understand, or which was not covered well enough?</p>
+            @Html.TextAreaFor(p => p.Comment)
+            <hr/>
+            <input type="submit" value="Save" />
+        }
+
+</div>

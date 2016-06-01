@@ -19,6 +19,7 @@ namespace TrainingSystem.Entities
         public DbSet<RoadmapXRoad> RoadmapXRoads { get; set; }
         public DbSet<RoadXRoadStep> RoadXRoadSteps { get; set; }
         public DbSet<StudentXRoadStep> StudentXRoadSteps { get; set; }
+        public DbSet<StudentResourceRating> StudentResourceRatings { get; set; }
         public DbSet<AspNetUsers> AspNetUsers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -179,6 +179,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LearnViewModels.cs" />
     <Compile Include="Models\LibraryViewModels.cs" />
     <Compile Include="Models\ManageGrowingPathViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -250,6 +251,8 @@
     <Content Include="Views\Library\RoadMap.cshtml" />
     <Content Include="Views\Library\Road.cshtml" />
     <Content Include="Views\Library\Step.cshtml" />
+    <Content Include="Views\Learn\RateStepResource.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\StepResourceRating.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

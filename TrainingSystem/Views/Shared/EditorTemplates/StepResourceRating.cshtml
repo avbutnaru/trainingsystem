@@ -1,0 +1,19 @@
+﻿@using TrainingSystem.Entities
+@using TrainingSystem.Models
+@model TrainingSystem.Models.StepResourceRating
+
+<tr>
+    <td>
+        @Model.Name
+        @Html.HiddenFor(p => p.Id)
+    </td>
+    <td>@Model.Description</td>
+    <td>
+        The resource is:
+        @Html.RadioButtonFor(p => p.RatingValue, RatingValue.Bad) Bad
+        @Html.RadioButtonFor(p => p.RatingValue, RatingValue.Medium) Medium
+        @Html.RadioButtonFor(p => p.RatingValue, RatingValue.Good) Good
+    </td>
+</tr>
+
+<hr />
