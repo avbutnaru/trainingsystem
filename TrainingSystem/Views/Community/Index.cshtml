@@ -1,0 +1,34 @@
+﻿@model TrainingSystem.Models.CommunityMainViewModel
+@{
+    ViewBag.Title = "Community";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="jumbotron">
+    @{
+        if (Model.ReviewsToDo.Count > 0)
+        {
+            <h4>Reviews To Do</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var exerciseReview in Model.ReviewsToDo)
+                    {
+                        <tr>
+                            <td>@exerciseReview.StudentExercise.StepExercise.Name</td>
+                            <td>@exerciseReview.StudentExercise.FinishExerciseComment</td>
+                            <td>
+                                @Html.ActionLink("Review", "DoReview", "Community", new { @id = exerciseReview.Id }, new {})
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No roadmaps yet!</p>
+        }
+    }
+</div>

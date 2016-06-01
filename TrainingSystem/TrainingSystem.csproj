@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommunityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LearnController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
@@ -179,6 +180,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\CommunityViewModels.cs" />
     <Compile Include="Models\LearnViewModels.cs" />
     <Compile Include="Models\LibraryViewModels.cs" />
     <Compile Include="Models\ManageGrowingPathViewModels.cs" />
@@ -255,6 +257,8 @@
     <Content Include="Views\Shared\EditorTemplates\StepResourceRating.cshtml" />
     <Content Include="Views\Learn\FinishExercise.cshtml" />
     <Content Include="Views\Learn\RateExercise.cshtml" />
+    <Content Include="Views\Community\Index.cshtml" />
+    <Content Include="Views\Community\DoReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

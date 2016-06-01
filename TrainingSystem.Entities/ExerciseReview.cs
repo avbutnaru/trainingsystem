@@ -24,5 +24,12 @@ namespace TrainingSystem.Entities
         public ExerciseReviewStatus ExerciseReviewStatus { get; set; }
         public StudentExercise StudentExercise { get; set; }
         public int Id { get; set; }
+        public string ReviewContent { get; set; }
+
+        public void FinishReview(string reviewContent)
+        {
+            ReviewContent = reviewContent;
+            ExerciseReviewStatus = ExerciseReviewStatus.Reviewed;
+        }
     }
 }

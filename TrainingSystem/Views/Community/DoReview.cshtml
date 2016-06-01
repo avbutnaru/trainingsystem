@@ -1,0 +1,35 @@
+﻿@model TrainingSystem.Models.DoReviewViewModel
+@{
+    ViewBag.Title = "Review In Progress";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+<div class="jumbotron">
+    <h3>@Model.Review.StudentExercise.StepExercise.Name</h3>
+    <hr/>
+    <p>@Model.Review.StudentExercise.StepExercise.Description</p>
+    <hr />
+    <a href="/ExerciseSolution/@Model.Review.StudentExercise.FinishExerciseFileName" target="_blank">Download solution uploaded by student</a>
+    <hr />
+    @using (Html.BeginForm("SaveReview", "Community", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.ReviewContent, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.ReviewContent, new { @class = "form-control" })
+            </div>
+        </div>
+        @Html.HiddenFor(m => m.ReviewId)
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+</div>
