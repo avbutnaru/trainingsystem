@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetUsers.cs" />
+    <Compile Include="ExerciseReview.cs" />
     <Compile Include="Road.cs" />
     <Compile Include="RoadMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

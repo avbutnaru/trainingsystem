@@ -4,10 +4,11 @@ namespace TrainingSystem.Entities
     {
         protected override void Seed(TrainingSystemContext context)
         {
-            var userId = "0fef0fe8-8327-4020-bd00-25590bb4ef07";
+            var teacherUserId = "0fef0fe8-8327-4020-bd00-25590bb4ef07";
+            var studentUserId = "0fef0fe8-8327-4020-bd00-25590bb4ef05";
             context.AspNetUsers.Add(new AspNetUsers
             {
-                Id = userId,
+                Id = teacherUserId,
                 Email = "rollerblade1138@yahoo.com",
                 EmailConfirmed = false,
                 PasswordHash = "AJeirg3g2RPE32a3Df8x8e7UdCWT3375oVryE2xMlnRMaKvNy6Rc7ovLs1s3wMdmvw==",
@@ -20,25 +21,46 @@ namespace TrainingSystem.Entities
                 AccessFailedCount = 0,
                 UserName = "rollerblade1138@yahoo.com"
             });
+
+            context.AspNetUsers.Add(new AspNetUsers
+            {
+                Id = studentUserId,
+                Email = "abutnaru@gmail.com",
+                EmailConfirmed = false,
+                PasswordHash = "AJeirg3g2RPE32a3Df8x8e7UdCWT3375oVryE2xMlnRMaKvNy6Rc7ovLs1s3wMdmvw==",
+                SecurityStamp = "58debd59-dc2e-4cda-aa6c-e7f1d5f23982",
+                PhoneNumber = null,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnabled = true,
+                LockoutEndDateUtc = null,
+                AccessFailedCount = 0,
+                UserName = "abutnaru@gmail.com"
+            });
+
             context.SaveChanges();
 
 
 
-            var roadMap = new RoadMap("1111", "11111", userId);
+            var roadMap = new RoadMap("1111", "11111", teacherUserId);
             context.RoadMaps.Add(roadMap);
 
-            var road = new Road("2222", "2222", userId, roadMap);
+            var road = new Road("2222", "2222", teacherUserId, roadMap);
             context.Roads.Add(road);
 
-            var roadStep = new RoadStep("333", "333", userId, road);
+            var roadStep = new RoadStep("333", "333", teacherUserId, road);
             context.RoadSteps.Add(roadStep);
 
-            var resource = new StepResource("444", "444", userId, roadStep);
+            var teacher = new Teacher(teacherUserId);
+            context.Teachers.Add(teacher);
+            teacher.AddRoadStep(roadStep);
+
+            var resource = new StepResource("444", "444", teacherUserId, roadStep);
             context.StepResources.Add(resource);
-            var exercise = new StepExercise("444", "444", userId, roadStep);
+            var exercise = new StepExercise("444", "444", teacherUserId, roadStep);
             context.StepExercises.Add(exercise);
 
-            var student = new Student(userId);
+            var student = new Student(studentUserId);
             context.Students.Add(student);
 
             var studentRoadStep = new StudentXRoadStep(student, roadStep, LearningStatus.StudyingResources);

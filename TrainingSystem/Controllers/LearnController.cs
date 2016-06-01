@@ -6,11 +6,19 @@ using TrainingSystem.Models;
 using System.Data.Entity;
 using System.IO;
 using Microsoft.AspNet.Identity;
+using TrainingSystem.Services;
 
 namespace TrainingSystem.Controllers
 {
     public class LearnController : TrainingSystemController
     {
+        private ExerciseReviewerFinder _exerciseReviewerFinder;
+
+        public LearnController()
+        {
+            _exerciseReviewerFinder = new ExerciseReviewerFinder();
+        }
+
         public ActionResult LearnStep(int id)
         {
             if (CurrentUserId == null)
@@ -171,6 +179,13 @@ namespace TrainingSystem.Controllers
 
             var currentStudent = CurrentStudentWithRoadSteps;
             currentStudent.RateExercise(roadStep, model.StepExerciseId, model.Comment, model.RatingValue);
+
+            var allTeachers = Db.Teachers
+                .Include(p => p.TeacherXRoadSteps)
+                .ToList();
+            var reviewer = _exerciseReviewerFinder.Find(roadStep, allTeachers);
+            reviewer.PrepareForReview(roadStep, model.StepExerciseId, currentStudent);
+
             Db.SaveChanges();
 
             return RedirectToAction("Step", "Library", new { @id = model.RoadStepId });

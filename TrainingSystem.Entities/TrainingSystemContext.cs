@@ -15,6 +15,7 @@ namespace TrainingSystem.Entities
         public DbSet<Road> Roads { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<ExerciseReview> ExerciseReviews { get; set; }
         public DbSet<StepResource> StepResources { get; set; }
         public DbSet<StepExercise> StepExercises { get; set; }
         public DbSet<RoadmapXRoad> RoadmapXRoads { get; set; }

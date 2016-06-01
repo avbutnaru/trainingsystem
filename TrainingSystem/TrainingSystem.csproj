@@ -273,6 +273,10 @@
       <Project>{06318a23-7da2-4fc7-ad10-28a1b40e8e8b}</Project>
       <Name>TrainingSystem.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TrainingSystem.Services\TrainingSystem.Services.csproj">
+      <Project>{FA679F21-9522-4C4D-89EF-820EED2AAF08}</Project>
+      <Name>TrainingSystem.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
