@@ -14,12 +14,14 @@ namespace TrainingSystem.Entities
         public DbSet<RoadStep> RoadSteps { get; set; }
         public DbSet<Road> Roads { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
         public DbSet<StepResource> StepResources { get; set; }
         public DbSet<StepExercise> StepExercises { get; set; }
         public DbSet<RoadmapXRoad> RoadmapXRoads { get; set; }
         public DbSet<RoadXRoadStep> RoadXRoadSteps { get; set; }
         public DbSet<StudentXRoadStep> StudentXRoadSteps { get; set; }
         public DbSet<StudentResourceRating> StudentResourceRatings { get; set; }
+        public DbSet<StudentExercise> StudentExercises { get; set; }
         public DbSet<AspNetUsers> AspNetUsers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

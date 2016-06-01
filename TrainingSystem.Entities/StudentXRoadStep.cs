@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TrainingSystem.Entities
 {
@@ -7,6 +8,12 @@ namespace TrainingSystem.Entities
     {
         StudyingResources = 1,
         FinishedResources
+    }
+
+    public enum ExerciseStatus
+    {
+        Started = 1,
+        Finished
     }
 
     public class StudentXRoadStep
@@ -36,10 +43,39 @@ namespace TrainingSystem.Entities
         public string FinishResourcesComment { get; set; }
 
         public IList<StudentResourceRating> StudentResourceRatings { get; set; }
+        public IList<StudentExercise> StudentExercises { get; set; }
 
         public void RateResource(StepResource stepResource, RatingValue ratingValue)
         {
             StudentResourceRatings.Add(new StudentResourceRating(this, stepResource, ratingValue));
+        }
+
+        public void StartExercise(StepExercise exercise)
+        {
+            var studentExercise = new StudentExercise(this, exercise);
+            studentExercise.StartExercise();
+            StudentExercises.Add(studentExercise);
+        }
+
+        public bool CanStartExercise(StepExercise stepExercise)
+        {
+            return StudentExercises.All(p => p.StepExercise.Id != stepExercise.Id);
+        }
+
+        public bool CanFinishExercise(StepExercise stepExercise)
+        {
+            return StudentExercises.Any(p => p.StepExercise.Id == stepExercise.Id && p.ExerciseStatus == ExerciseStatus.Started);
+        }
+
+        public void FinishExercise(StepExercise exercise, string fileName)
+        {
+            var studentExercise = GetStudentExercise(exercise);
+            studentExercise.FinishExercise(fileName);
+        }
+
+        public StudentExercise GetStudentExercise(StepExercise exercise)
+        {
+            return StudentExercises.FirstOrDefault(p => p.Id == exercise.Id);
         }
     }
 }

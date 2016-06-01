@@ -253,6 +253,8 @@
     <Content Include="Views\Library\Step.cshtml" />
     <Content Include="Views\Learn\RateStepResource.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\StepResourceRating.cshtml" />
+    <Content Include="Views\Learn\FinishExercise.cshtml" />
+    <Content Include="Views\Learn\RateExercise.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

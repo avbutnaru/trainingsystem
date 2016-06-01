@@ -34,4 +34,19 @@ namespace TrainingSystem.Models
         public string Name { get; set; }
         public string Description { get; set; }
     }
+
+    public class FinishExerciseViewModel
+    {
+        public StepExercise Exercise { get; set; }
+        public RoadStep RoadStep { get; set; }
+    }
+
+    public class RateStepExerciseViewModel
+    {
+        public RatingValue RatingValue { get; set; }
+        public string Comment { get; set; }
+        public StepExercise StepExercise { get; set; }
+        public int StepExerciseId { get; set; }
+        public int RoadStepId { get; set; }
+    }
 }

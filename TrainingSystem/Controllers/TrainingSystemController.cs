@@ -20,10 +20,16 @@ namespace TrainingSystem.Controllers
             get { return Db.Students.FirstOrDefault(p => p.ParentUserId == CurrentUserId); }
         }
 
+        protected Teacher CurrentTeacher
+        {
+            get { return Db.Teachers.FirstOrDefault(p => p.ParentUserId == CurrentUserId); }
+        }
+
         protected Student CurrentStudentWithRoadSteps
         {
             get { return Db.Students
                     .Include(p => p.StudentXRoadSteps.Select(u => u.RoadStep))
+                    .Include(p => p.StudentXRoadSteps.Select(u => u.StudentExercises.Select(w => w.StepExercise)))
                     .FirstOrDefault(p => p.ParentUserId == CurrentUserId); }
         }
     }

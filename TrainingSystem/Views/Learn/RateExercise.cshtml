@@ -1,0 +1,41 @@
+﻿@using TrainingSystem.Entities
+@model TrainingSystem.Models.RateStepExerciseViewModel
+@{
+    ViewBag.Title = "Rate Road Step Exercise";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+    <div class="jumbotron">
+        <h3>
+            @Model.StepExercise.Name
+        </h3>
+        <hr />
+<p>@Model.StepExercise.Description</p>
+    <hr/>
+        @using (Html.BeginForm("RateExercise", "Learn", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(p => p.StepExerciseId)
+            @Html.HiddenFor(p => p.RoadStepId)
+            <table>
+                <tr>
+                    <td>
+                        The exercise is:
+                        @Html.RadioButtonFor(p => p.RatingValue, RatingValue.Bad) Bad
+                        @Html.RadioButtonFor(p => p.RatingValue, RatingValue.Medium) Medium
+                        @Html.RadioButtonFor(p => p.RatingValue, RatingValue.Good) Good
+                    </td>
+                </tr>
+            </table>
+
+            <hr />
+            <p>Was there anything required for the exercise that was not covered by the learning resources? What did you find most difficult about the exercise?</p>
+            @Html.TextAreaFor(p => p.Comment)
+            <hr/>
+            <input type="submit" value="Save" />
+        }
+
+</div>

@@ -13,10 +13,8 @@ using System.Data.Entity;
 namespace TrainingSystem.Controllers
 {
     [Authorize]
-    public class ManageRoadMapController : Controller
+    public class ManageRoadMapController : TrainingSystemController
     {
-        private TrainingSystemContext db = new TrainingSystemContext();
-
         public ManageRoadMapController()
         {
         }
@@ -26,7 +24,7 @@ namespace TrainingSystem.Controllers
             var model = new ManageRoadMapViewModel();
             if (id != null)
             {
-                var roadMap = db.RoadMaps
+                var roadMap = Db.RoadMaps
                     .Include(x => x.RoadmapXRoads.Select(y => y.Road))
                     .FirstOrDefault(p => p.Id == id);
 
@@ -54,7 +52,7 @@ namespace TrainingSystem.Controllers
             RoadMap roadMap = null;
             if (model.Id != null)
             {
-                roadMap = db.RoadMaps.FirstOrDefault(p => p.Id == model.Id);
+                roadMap = Db.RoadMaps.FirstOrDefault(p => p.Id == model.Id);
                 if (roadMap != null)
                 {
                     roadMap.Name = model.Name;
@@ -66,10 +64,10 @@ namespace TrainingSystem.Controllers
                 var currentUserId = User.Identity.GetUserId();
 
                 roadMap = new RoadMap(model.Name, model.Description, currentUserId);
-                db.RoadMaps.Add(roadMap);
+                Db.RoadMaps.Add(roadMap);
             }
 
-            db.SaveChanges();
+            Db.SaveChanges();
             
             return RedirectToAction("List");
         }
@@ -78,8 +76,8 @@ namespace TrainingSystem.Controllers
         {
             var model = new ManageRoadMapListViewModel();
             var currentUserId = User.Identity.GetUserId();
-            model.RoadMaps = db.RoadMaps.Where(p => p.UserId == currentUserId).ToList();
-            model.RoadSteps = db.RoadSteps.Where(p => p.UserId == currentUserId).ToList();
+            model.RoadMaps = Db.RoadMaps.Where(p => p.UserId == currentUserId).ToList();
+            model.RoadSteps = Db.RoadSteps.Where(p => p.UserId == currentUserId).ToList();
             return View(model);
         }
 
@@ -90,7 +88,7 @@ namespace TrainingSystem.Controllers
             var model = new ManageRoadViewModel();
             if (id != null)
             {
-                var road = db.Roads
+                var road = Db.Roads
                     .Include(x => x.RoadXRoadSteps.Select(y => y.RoadStep))
                     .FirstOrDefault(p => p.Id == id);
                 if (road != null)
@@ -122,7 +120,7 @@ namespace TrainingSystem.Controllers
             Road road = null;
             if (model.Id != null)
             {
-                road = db.Roads.FirstOrDefault(p => p.Id == model.Id);
+                road = Db.Roads.FirstOrDefault(p => p.Id == model.Id);
                 if (road != null)
                 {
                     road.Name = model.Name;
@@ -136,14 +134,14 @@ namespace TrainingSystem.Controllers
                 RoadMap roadmap = null;
                 if (model.RoadmapId != null)
                 {
-                    roadmap = db.RoadMaps.FirstOrDefault(p => p.Id == model.RoadmapId);
+                    roadmap = Db.RoadMaps.FirstOrDefault(p => p.Id == model.RoadmapId);
                 }
 
                 road = new Road(model.Name, model.Description, currentUserId, roadmap);
-                db.Roads.Add(road);
+                Db.Roads.Add(road);
             }
 
-            db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("List");
         }
@@ -153,7 +151,7 @@ namespace TrainingSystem.Controllers
             var model = new ManageRoadStepViewModel();
             if (id != null)
             {
-                var roadStep = db.RoadSteps
+                var roadStep = Db.RoadSteps
                     .Include(x => x.StepResources)
                     .Include(x => x.StepExercises)
                     .FirstOrDefault(p => p.Id == id);
@@ -188,7 +186,7 @@ namespace TrainingSystem.Controllers
             RoadStep roadStep = null;
             if (model.Id != null)
             {
-                roadStep = db.RoadSteps.FirstOrDefault(p => p.Id == model.Id);
+                roadStep = Db.RoadSteps.FirstOrDefault(p => p.Id == model.Id);
                 if (roadStep != null)
                 {
                     roadStep.Name = model.Name;
@@ -202,14 +200,23 @@ namespace TrainingSystem.Controllers
                 Road road = null;
                 if (model.RoadId != null)
                 {
-                    road = db.Roads.FirstOrDefault(p => p.Id == model.RoadId);
+                    road = Db.Roads.FirstOrDefault(p => p.Id == model.RoadId);
                 }
 
                 roadStep = new RoadStep(model.Name, model.Description, currentUserId, road);
-                db.RoadSteps.Add(roadStep);
+                Db.RoadSteps.Add(roadStep);
+
+                var currentTeacher = CurrentTeacher;
+                if (currentTeacher == null)
+                {
+                    currentTeacher = new Teacher(currentUserId);
+                    Db.Teachers.Add(currentTeacher);
+                }
+
+                currentTeacher.AddRoadStep(roadStep);
             }
 
-            db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("List");
         }
@@ -221,7 +228,7 @@ namespace TrainingSystem.Controllers
             var model = new ManageStepResourceViewModel();
             if (id != null)
             {
-                var stepResource = db.StepResources
+                var stepResource = Db.StepResources
                     .FirstOrDefault(p => p.Id == id);
                 if (stepResource != null)
                 {
@@ -251,7 +258,7 @@ namespace TrainingSystem.Controllers
             StepResource stepResource = null;
             if (model.Id != null)
             {
-                stepResource = db.StepResources.FirstOrDefault(p => p.Id == model.Id);
+                stepResource = Db.StepResources.FirstOrDefault(p => p.Id == model.Id);
                 if (stepResource != null)
                 {
                     stepResource.Name = model.Name;
@@ -265,14 +272,14 @@ namespace TrainingSystem.Controllers
                 RoadStep roadStep = null;
                 if (model.RoadStepId != null)
                 {
-                    roadStep = db.RoadSteps.FirstOrDefault(p => p.Id == model.RoadStepId);
+                    roadStep = Db.RoadSteps.FirstOrDefault(p => p.Id == model.RoadStepId);
                 }
 
                 stepResource = new StepResource(model.Name, model.Description, currentUserId, roadStep);
-                db.StepResources.Add(stepResource);
+                Db.StepResources.Add(stepResource);
             }
 
-            db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("EditRoadStep", new { @id = model.RoadStepId });
         }
@@ -282,7 +289,7 @@ namespace TrainingSystem.Controllers
             var model = new ManageStepExerciseViewModel();
             if (id != null)
             {
-                var stepExercise = db.StepExercises
+                var stepExercise = Db.StepExercises
                     .FirstOrDefault(p => p.Id == id);
                 if (stepExercise != null)
                 {
@@ -312,7 +319,7 @@ namespace TrainingSystem.Controllers
             StepExercise stepExercise = null;
             if (model.Id != null)
             {
-                stepExercise = db.StepExercises.FirstOrDefault(p => p.Id == model.Id);
+                stepExercise = Db.StepExercises.FirstOrDefault(p => p.Id == model.Id);
                 if (stepExercise != null)
                 {
                     stepExercise.Name = model.Name;
@@ -326,14 +333,14 @@ namespace TrainingSystem.Controllers
                 RoadStep roadStep = null;
                 if (model.RoadStepId != null)
                 {
-                    roadStep = db.RoadSteps.FirstOrDefault(p => p.Id == model.RoadStepId);
+                    roadStep = Db.RoadSteps.FirstOrDefault(p => p.Id == model.RoadStepId);
                 }
 
                 stepExercise = new StepExercise(model.Name, model.Description, currentUserId, roadStep);
-                db.StepExercises.Add(stepExercise);
+                Db.StepExercises.Add(stepExercise);
             }
 
-            db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("EditRoadStep", new { @id = model.RoadStepId });
         }

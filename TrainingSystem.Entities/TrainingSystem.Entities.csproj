@@ -55,12 +55,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoadmapXRoad.cs" />
     <Compile Include="RoadStep.cs" />
+    <Compile Include="TeacherXRoadStep.cs" />
     <Compile Include="RoadXRoadStep.cs" />
     <Compile Include="StepExercise.cs" />
     <Compile Include="StepResource.cs" />
     <Compile Include="Student.cs" />
+    <Compile Include="StudentExercise.cs" />
     <Compile Include="StudentResourceRating.cs" />
     <Compile Include="StudentXRoadStep.cs" />
+    <Compile Include="Teacher.cs" />
     <Compile Include="TrainingSystemContext.cs" />
     <Compile Include="TrainingSystemInitializer.cs" />
   </ItemGroup>

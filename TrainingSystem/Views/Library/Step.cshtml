@@ -60,6 +60,19 @@
                         <tr>
                             <td>@exercise.Name</td>
                             <td>@exercise.Description</td>
+                            <td>
+                                @if (Model.StudentXRoadStep.LearningStatus == LearningStatus.FinishedResources)
+                                {
+                                    if (Model.StudentXRoadStep.CanStartExercise(exercise))
+                                    {
+                                         @Html.ActionLink("Start exercise", "StartExercise", "Learn", new {@id = exercise.Id, @roadStepId = Model.RoadStep.Id}, new {})
+                                    }
+                                    else if (Model.StudentXRoadStep.CanFinishExercise(exercise))
+                                    {
+                                        @Html.ActionLink("Finish exercise", "FinishExercise", "Learn", new {@id = exercise.Id, @roadStepId = Model.RoadStep.Id}, new {})
+                                    }
+                                }
+                            </td>
                         </tr>
                     }
                 </tbody>

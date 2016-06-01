@@ -47,11 +47,39 @@ namespace TrainingSystem.Entities
             studentRoadStep.FinishResourcesComment = comment;
         }
 
+        public void RateExercise(RoadStep roadStep, int stepExerciseId, string comment, RatingValue ratingValue)
+        {
+            var studentExercise = GetStudentExercise(roadStep, stepExerciseId);
+            studentExercise.FinishExerciseComment = comment;
+            studentExercise.RatingValue = ratingValue;
+        }
+
         public void RateResource(RoadStep roadStep, int stepResourceId, RatingValue ratingValue)
         {
             var stepResource = roadStep.StepResources.FirstOrDefault(p => p.Id == stepResourceId);
             var studentRoadStep = StudentRoadStep(roadStep);
             studentRoadStep.RateResource(stepResource, ratingValue);
+        }
+
+        public void StartExercise(RoadStep roadStep, int exerciseId)
+        {
+            var exercise = roadStep.StepExercises.FirstOrDefault(p => p.Id == exerciseId);
+            var studentRoadStep = StudentRoadStep(roadStep);
+            studentRoadStep.StartExercise(exercise);
+        }
+
+        public void FinishExercise(RoadStep roadStep, int exerciseId, string fileName)
+        {
+            var exercise = roadStep.StepExercises.FirstOrDefault(p => p.Id == exerciseId);
+            var studentRoadStep = StudentRoadStep(roadStep);
+            studentRoadStep.FinishExercise(exercise, fileName);
+        }
+
+        public StudentExercise GetStudentExercise(RoadStep roadStep, int exerciseId)
+        {
+            var studentRoadStep = StudentRoadStep(roadStep);
+            var exercise = roadStep.StepExercises.FirstOrDefault(p => p.Id == exerciseId);
+            return studentRoadStep.GetStudentExercise(exercise);
         }
     }
 }

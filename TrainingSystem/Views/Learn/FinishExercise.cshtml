@@ -1,0 +1,26 @@
+﻿@model TrainingSystem.Models.FinishExerciseViewModel
+@{
+    ViewBag.Title = "Upload Exercise Solution";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+<div class="jumbotron">
+    <h3>
+        @Model.RoadStep.Name - @Model.Exercise.Name
+    </h3>
+    <hr/>
+    <p>@Model.Exercise.Description</p>
+    <hr/>
+
+    @using (Html.BeginForm("UploadExerciseSolution", "Learn", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="file" />
+        <input type="submit" name="Submit" id="Submit" value="Upload"/>
+        @Html.Hidden("roadStepId", Model.RoadStep.Id)
+        @Html.Hidden("exerciseId", Model.Exercise.Id)
+    }
+
+</div>
