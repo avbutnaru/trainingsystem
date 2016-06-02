@@ -23,6 +23,6 @@ namespace TrainingSystem.Models
         public ExerciseReview Review { get; set; }
         public string ReviewContent { get; set; }
         public int ReviewId { get; set; }
-        public bool HasGraduatedRoadStep { get; set; }
+        public bool HasGraduated { get; set; }
     }
 }

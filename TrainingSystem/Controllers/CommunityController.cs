@@ -62,7 +62,7 @@ namespace TrainingSystem.Controllers
                 .Include(p => p.StudentExercise.StudentXRoadStep)
                 .FirstOrDefault(p => p.Id == model.ReviewId);
 
-            review.FinishReview(model.ReviewContent, model.HasGraduatedRoadStep);
+            review.FinishReview(model.ReviewContent, model.HasGraduated);
 
             Db.SaveChanges();
 
@@ -75,11 +75,13 @@ namespace TrainingSystem.Controllers
 
             var review = Db.ExerciseReviews
                 .Include(p => p.StudentExercise.StepExercise)
+                .Include(p => p.StudentExercise.StudentXRoadStep)
                 .FirstOrDefault(p => p.Id == id);
 
             model.Review = review;
             model.ReviewId = review.Id;
             model.ReviewContent = review.ReviewContent;
+            model.HasGraduated = review.HasGraduated;
 
             return View(model);
         }

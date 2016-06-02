@@ -26,8 +26,8 @@
         </div>
         <div class="form-group">
             <div class="col-md-10">
-                @Html.RadioButtonFor(p => p.HasGraduatedRoadStep, true) Student has graduated this road step
-                @Html.RadioButtonFor(p => p.HasGraduatedRoadStep, false) Student has not graduated this road step
+                @Html.RadioButtonFor(p => p.HasGraduated, true) Student has graduated this road step
+                @Html.RadioButtonFor(p => p.HasGraduated, false) Student has not graduated this road step
             </div>
         </div>
         @Html.HiddenFor(m => m.ReviewId)
