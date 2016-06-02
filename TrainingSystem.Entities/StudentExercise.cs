@@ -27,6 +27,7 @@ namespace TrainingSystem.Entities
         public DateTime CreateDate { get; set; }
         public DateTime? StartExerciseDate { get; set; }
         public DateTime? FinishExerciseDate { get; set; }
+        public DateTime? ReviewExerciseDate { get; set; }
         public string FinishExerciseFileName { get; set; }
         public string FinishExerciseComment { get; set; }
         public RatingValue? RatingValue { get; set; }
@@ -42,6 +43,17 @@ namespace TrainingSystem.Entities
             ExerciseStatus = ExerciseStatus.Finished;
             FinishExerciseDate = DateTime.Now;
             FinishExerciseFileName = fileName;
+        }
+
+        public void FinishExerciseReview(bool hasGraduated)
+        {
+            ExerciseStatus = ExerciseStatus.Reviewed;
+            ReviewExerciseDate = DateTime.Now;
+
+            if (hasGraduated)
+            {
+                StudentXRoadStep.Graduate();
+            }
         }
     }
 }

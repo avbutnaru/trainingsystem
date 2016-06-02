@@ -1,0 +1,33 @@
+﻿@model TrainingSystem.Models.DoReviewViewModel
+@{
+    ViewBag.Title = "View Review";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+<div class="jumbotron">
+    <h3>@Model.Review.StudentExercise.StepExercise.Name</h3>
+    <hr/>
+    <p>@Model.Review.StudentExercise.StepExercise.Description</p>
+    <hr/>
+    <a href="/ExerciseSolution/@Model.Review.StudentExercise.FinishExerciseFileName" target="_blank">Download the solution that you uploaded for review</a>
+    <hr/>
+
+    @if (Model.HasGraduatedRoadStep)
+    {
+        <p>
+            You graduated this road step!
+        </p>
+    }
+    else
+    {
+        <p>
+            You did not graduate this road step yet, you can study the resources more and do one of the exercises again!
+        </p>
+    }
+    <p>Here is the review content:</p>
+    <p>@Model.ReviewContent</p>
+
+</div>

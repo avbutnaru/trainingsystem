@@ -7,13 +7,15 @@ namespace TrainingSystem.Entities
     public enum LearningStatus
     {
         StudyingResources = 1,
-        FinishedResources
+        FinishedResources,
+        Graduated
     }
 
     public enum ExerciseStatus
     {
         Started = 1,
-        Finished
+        Finished,
+        Reviewed
     }
 
     public class StudentXRoadStep
@@ -40,6 +42,7 @@ namespace TrainingSystem.Entities
         public LearningStatus LearningStatus { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? FinishResourcesDate { get; set; }
+        public DateTime? GraduatedDate { get; set; }
         public string FinishResourcesComment { get; set; }
 
         public IList<StudentResourceRating> StudentResourceRatings { get; set; }
@@ -59,7 +62,7 @@ namespace TrainingSystem.Entities
 
         public bool CanStartExercise(StepExercise stepExercise)
         {
-            return StudentExercises.All(p => p.StepExercise.Id != stepExercise.Id);
+            return StudentExercises.All(p => p.StepExercise.Id != stepExercise.Id || p.ExerciseStatus == ExerciseStatus.Reviewed);
         }
 
         public bool CanFinishExercise(StepExercise stepExercise)
@@ -75,7 +78,31 @@ namespace TrainingSystem.Entities
 
         public StudentExercise GetStudentExercise(StepExercise exercise)
         {
-            return StudentExercises.FirstOrDefault(p => p.Id == exercise.Id);
+            return GetStudentExercise(exercise.Id);
+        }
+
+        public StudentExercise GetStudentExercise(int stepExerciseId)
+        {
+            return
+                StudentExercises.Where(p => p.StepExercise.Id == stepExerciseId)
+                    .OrderByDescending(p => p.CreateDate)
+                    .FirstOrDefault();
+        }
+
+        public void Graduate()
+        {
+            LearningStatus = LearningStatus.Graduated;
+            GraduatedDate = DateTime.Now;
+        }
+
+        public bool IsWaitingForReview(StepExercise stepExercise)
+        {
+            return StudentExercises.Any(p => p.StepExercise.Id == stepExercise.Id && p.ExerciseStatus == ExerciseStatus.Finished);
+        }
+
+        public bool HasGraduated()
+        {
+            return LearningStatus == LearningStatus.Graduated;
         }
     }
 }

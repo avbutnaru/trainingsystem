@@ -259,6 +259,7 @@
     <Content Include="Views\Learn\RateExercise.cshtml" />
     <Content Include="Views\Community\Index.cshtml" />
     <Content Include="Views\Community\DoReview.cshtml" />
+    <Content Include="Views\Community\ViewReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

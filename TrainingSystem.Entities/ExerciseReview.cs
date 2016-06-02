@@ -26,10 +26,12 @@ namespace TrainingSystem.Entities
         public int Id { get; set; }
         public string ReviewContent { get; set; }
 
-        public void FinishReview(string reviewContent)
+        public void FinishReview(string reviewContent, bool hasGraduated)
         {
             ReviewContent = reviewContent;
             ExerciseReviewStatus = ExerciseReviewStatus.Reviewed;
+
+            StudentExercise.FinishExerciseReview(hasGraduated);
         }
     }
 }

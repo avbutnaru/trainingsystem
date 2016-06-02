@@ -15,13 +15,28 @@ namespace TrainingSystem.Controllers
         {
             var model = new CommunityMainViewModel();
             var currentTeacher = CurrentTeacher;
-            model.ReviewsToDo =
-                Db.ExerciseReviews
-                .Include(p => p.StudentExercise.StepExercise)
-                .Where(
-                    p =>
-                        p.Teacher.Id == currentTeacher.Id &&
-                        p.ExerciseReviewStatus == ExerciseReviewStatus.WaitingForReview).ToList();
+            if (currentTeacher != null)
+            {
+                model.ReviewsToDo =
+                    Db.ExerciseReviews
+                        .Include(p => p.StudentExercise.StepExercise)
+                        .Where(
+                            p =>
+                                p.Teacher.Id == currentTeacher.Id &&
+                                p.ExerciseReviewStatus == ExerciseReviewStatus.WaitingForReview).ToList();
+            }
+
+            var currentStudent = CurrentStudent;
+            if (currentStudent != null)
+            {
+                model.ReviewsReceived =
+                    Db.ExerciseReviews
+                        .Include(p => p.StudentExercise.StepExercise)
+                        .Where(
+                            p =>
+                                p.StudentExercise.StudentXRoadStep.Student.Id == currentStudent.Id &&
+                                p.ExerciseReviewStatus == ExerciseReviewStatus.Reviewed).ToList();
+            }
 
             return View(model);
         }
@@ -43,13 +58,30 @@ namespace TrainingSystem.Controllers
         public ActionResult SaveReview(DoReviewViewModel model)
         {
             var review = Db.ExerciseReviews
+                .Include(p => p.StudentExercise.StepExercise)
+                .Include(p => p.StudentExercise.StudentXRoadStep)
                 .FirstOrDefault(p => p.Id == model.ReviewId);
 
-            review.FinishReview(model.ReviewContent);
+            review.FinishReview(model.ReviewContent, model.HasGraduatedRoadStep);
 
             Db.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ViewReview(int id)
+        {
+            var model = new DoReviewViewModel();
+
+            var review = Db.ExerciseReviews
+                .Include(p => p.StudentExercise.StepExercise)
+                .FirstOrDefault(p => p.Id == id);
+
+            model.Review = review;
+            model.ReviewId = review.Id;
+            model.ReviewContent = review.ReviewContent;
+
+            return View(model);
         }
     }
 }

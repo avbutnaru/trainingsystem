@@ -28,7 +28,32 @@
         }
         else
         {
-            <p>No roadmaps yet!</p>
+            <p>No reviews to do yet!</p>
+        }
+    }
+    <hr/>
+    @{
+        if (Model.ReviewsReceived.Count > 0)
+        {
+            <h4>Reviews Received</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var exerciseReview in Model.ReviewsReceived)
+                    {
+                        <tr>
+                            <td>@exerciseReview.StudentExercise.StepExercise.Name</td>
+                            <td>@exerciseReview.StudentExercise.FinishExerciseComment</td>
+                            <td>
+                                @Html.ActionLink("View", "ViewReview", "Community", new { @id = exerciseReview.Id }, new { })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No reviews received yet!</p>
         }
     }
 </div>
