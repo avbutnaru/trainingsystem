@@ -2,12 +2,6 @@ using System.Collections.Generic;
 
 namespace TrainingSystem.Entities
 {
-    public enum GroupRole
-    {
-        Teacher = 1,
-        Student = 2
-    }
-
     public class GroupMember
     {
         public GroupMember()

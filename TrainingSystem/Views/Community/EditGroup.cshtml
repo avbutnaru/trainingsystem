@@ -127,6 +127,8 @@
     }
 }
 
+@Html.ActionLink("Start training this group", "StartTrainingGroup", new { @id = Model.Id })
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

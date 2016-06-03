@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace TrainingSystem.Entities
 {
     public class GroupMemberForRoad
@@ -23,5 +25,17 @@ namespace TrainingSystem.Entities
         public bool CanMakeReviews { get; set; }
         public bool CanPrepareContent { get; set; }
         public bool ShouldLearn { get; set; }
+
+        public bool HasAnotherTeachingTask
+        {
+            get
+            {
+                return
+                    !GroupMember.AspNetUser.TrainingTasks.Any(
+                        p =>
+                            (p.TrainingTaskStatus == TrainingTaskStatus.Waiting ||
+                             p.TrainingTaskStatus == TrainingTaskStatus.InProgress) && p.IsTeachingTask);
+            }
+        }
     }
 }

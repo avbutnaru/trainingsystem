@@ -69,8 +69,10 @@
     <Compile Include="StudentXRoadStep.cs" />
     <Compile Include="Teacher.cs" />
     <Compile Include="TrainingGroupXRoad.cs" />
+    <Compile Include="TrainingNeed.cs" />
     <Compile Include="TrainingSystemContext.cs" />
     <Compile Include="TrainingSystemInitializer.cs" />
+    <Compile Include="TrainingTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

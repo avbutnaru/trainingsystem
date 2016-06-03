@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -226,6 +227,27 @@ namespace TrainingSystem.Controllers
             Db.SaveChanges();
 
             return RedirectToAction("EditGroup", new { @id = trainingGroup.Id });
+        }
+
+        public ActionResult StartTrainingGroup(int id)
+        {
+            var trainingGroup = Db.TrainingGroups
+                .FirstOrDefault(p => p.Id == id);
+
+            trainingGroup.AutomatedTrainingIsActive = true;
+            Db.SaveChanges();
+
+            return RedirectToAction("IterateGroupTraining", new { @id = trainingGroup.Id });
+        }
+
+        public ActionResult IterateGroupTraining(int id)
+        {
+            var trainingGroup = Db.TrainingGroups
+                .FirstOrDefault(p => p.Id == id);
+
+            IList<TrainingTask> trainingTasks = trainingGroup.IterateTraining();
+
+            return View();
         }
     }
 }

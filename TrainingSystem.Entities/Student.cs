@@ -81,5 +81,48 @@ namespace TrainingSystem.Entities
             var exercise = roadStep.StepExercises.FirstOrDefault(p => p.Id == exerciseId);
             return studentRoadStep.GetStudentExercise(exercise);
         }
+
+        public TrainingNeed CalculateNeed(TrainingGroup trainingGroup)
+        {
+            var stepsInProgress = StudentXRoadSteps.Where(p => !p.HasGraduated()).ToList();
+            if (stepsInProgress.Count == 0)
+            {
+                return new TrainingNeed(true, null, null);
+            }
+
+            var stepsInProgressInTrainingGroup = new List<RoadStep>();
+            StudentXRoadStep firstStepInProgressInTrainingGroup = null;
+            foreach (var trainingGroupXRoad in trainingGroup.TrainingGroupXRoads)
+            {
+                var road = trainingGroupXRoad.Road;
+                foreach (var roadXRoadStep in road.RoadXRoadSteps)
+                {
+                    var step = roadXRoadStep.RoadStep;
+                    firstStepInProgressInTrainingGroup = stepsInProgress.FirstOrDefault(p => p.RoadStep.Id == step.Id);
+                    if (firstStepInProgressInTrainingGroup != null)
+                    {
+                        stepsInProgressInTrainingGroup.Add(step);
+                    }
+                }
+            }
+            if (stepsInProgressInTrainingGroup.Count == 0)
+            {
+                return new TrainingNeed(true, null, null);
+            }
+
+            if (firstStepInProgressInTrainingGroup.LearningStatus == LearningStatus.StudyingResources &&
+                firstStepInProgressInTrainingGroup.RoadStep.StepResources.Count == 0)
+            {
+                return new TrainingNeed(true, false, firstStepInProgressInTrainingGroup.RoadStep);
+            }
+
+            if (firstStepInProgressInTrainingGroup.LearningStatus == LearningStatus.FinishedResources &&
+                firstStepInProgressInTrainingGroup.RoadStep.StepExercises.Count == 0)
+            {
+                return new TrainingNeed(false, true, firstStepInProgressInTrainingGroup.RoadStep);
+            }
+
+            return null;
+        }
     }
 }
