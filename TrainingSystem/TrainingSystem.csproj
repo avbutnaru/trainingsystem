@@ -260,6 +260,9 @@
     <Content Include="Views\Community\Index.cshtml" />
     <Content Include="Views\Community\DoReview.cshtml" />
     <Content Include="Views\Community\ViewReview.cshtml" />
+    <Content Include="Views\Community\EditGroup.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RoadForGroupMember.cshtml" />
+    <Content Include="Views\Community\ActivateRoadForGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

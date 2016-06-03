@@ -1,0 +1,14 @@
+﻿@model TrainingSystem.Models.RoadForGroupMember
+
+<tr>
+    <td>
+        @Model.Name
+        @Html.HiddenFor(p => p.GroupMemberId)
+    </td>
+    <td>
+        @Html.CheckBoxFor(p => p.CanMakeReviews) Can Make Reviews
+        @Html.CheckBoxFor(p => p.CanPrepareContent) Can Prepare Content
+        @Html.CheckBoxFor(p => p.ShouldLearn) Should Learn
+        
+    </td>
+</tr>

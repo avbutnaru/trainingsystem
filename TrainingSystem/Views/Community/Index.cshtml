@@ -56,4 +56,30 @@
             <p>No reviews received yet!</p>
         }
     }
+    <hr />
+    @{
+        if (Model.TrainingGroups.Count > 0)
+        {
+            <h4>Training Groups</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var trainingGroup in Model.TrainingGroups)
+                    {
+                        <tr>
+                            <td>@trainingGroup.Name</td>
+                            <td>@trainingGroup.Description</td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditGroup", "Community", new { @id = trainingGroup.Id }, new { })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No training groups created yet!</p>
+        }
+    }
+    @Html.ActionLink("Add Training Group", "EditGroup")
 </div>

@@ -16,6 +16,10 @@ namespace TrainingSystem.Entities
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ExerciseReview> ExerciseReviews { get; set; }
+        public DbSet<TrainingGroup> TrainingGroups { get; set; }
+        public DbSet<GroupMember> GroupMembers { get; set; }
+        public DbSet<GroupMemberForRoad> GroupMemberForRoads { get; set; }
+        public DbSet<TrainingGroupXRoad> TrainingGroupXRoads { get; set; }
         public DbSet<StepResource> StepResources { get; set; }
         public DbSet<StepExercise> StepExercises { get; set; }
         public DbSet<RoadmapXRoad> RoadmapXRoads { get; set; }
@@ -28,6 +32,11 @@ namespace TrainingSystem.Entities
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<GroupMemberForRoad>()
+                .HasRequired(p =>p.TrainingGroupXRoad)
+                .WithMany(p => p.GroupMembersForRoad)
+                .WillCascadeOnDelete(true);
         }
     }
 }
