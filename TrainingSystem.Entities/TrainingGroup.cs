@@ -61,9 +61,12 @@ namespace TrainingSystem.Entities
             while (groupMemberWithNeed != null)
             {
                 var trainingNeed = groupMemberWithNeed.AspNetUser.CalculateNeed(this);
-                var solutionForNeed = DefineSolutionForNeed(trainingNeed, groupMemberWithNeed);
-                TrainingTasks.Add(solutionForNeed);
-                ret.Add(solutionForNeed);
+                if (!ret.Any(p => p.SolvesNeed(trainingNeed)))
+                {
+                    var solutionForNeed = DefineSolutionForNeed(trainingNeed, groupMemberWithNeed);
+                    TrainingTasks.Add(solutionForNeed);
+                    ret.Add(solutionForNeed);
+                }
                 groupMemberWithNeed = GetFirstGroupMemberWhoHasANeed();
             }
 
@@ -89,7 +92,8 @@ namespace TrainingSystem.Entities
 
                     if (availableRoadSteps.Count > 0)
                     {
-                        return new TrainingTask(groupMemberWithNeed.AspNetUser, TrainingTaskType.StartOneOfRoadSteps, availableRoadSteps);
+                        return new TrainingTask(groupMemberWithNeed.AspNetUser, TrainingTaskType.StartOneOfRoadSteps,
+                            availableRoadSteps);
                     }
                 }
             }

@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+
 namespace TrainingSystem.Entities
 {
     public class TrainingSystemInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<TrainingSystemContext>
@@ -5,11 +7,12 @@ namespace TrainingSystem.Entities
         protected override void Seed(TrainingSystemContext context)
         {
             var teacherUserId = "0fef0fe8-8327-4020-bd00-25590bb4ef07";
-            var studentUserId = "0fef0fe8-8327-4020-bd00-25590bb4ef05";
-            context.AspNetUsers.Add(new AspNetUsers
+            var student1UserId = "0fef0fe8-8327-4020-bd00-25590bb4ef05";
+            var student2UserId = "0fef0fe8-8327-4020-bd00-25590bb4ef09";
+            var teacher = new AspNetUsers
             {
                 Id = teacherUserId,
-                Email = "rollerblade1138@yahoo.com",
+                Email = "teacher@gmail.com",
                 EmailConfirmed = false,
                 PasswordHash = "AJeirg3g2RPE32a3Df8x8e7UdCWT3375oVryE2xMlnRMaKvNy6Rc7ovLs1s3wMdmvw==",
                 SecurityStamp = "58debd59-dc2e-4cda-aa6c-e7f1d5f23982",
@@ -20,12 +23,13 @@ namespace TrainingSystem.Entities
                 LockoutEndDateUtc = null,
                 AccessFailedCount = 0,
                 UserName = "rollerblade1138@yahoo.com"
-            });
+            };
+            context.AspNetUsers.Add(teacher);
 
-            context.AspNetUsers.Add(new AspNetUsers
+            var student1 = new AspNetUsers
             {
-                Id = studentUserId,
-                Email = "abutnaru@gmail.com",
+                Id = student1UserId,
+                Email = "student1@gmail.com",
                 EmailConfirmed = false,
                 PasswordHash = "AJeirg3g2RPE32a3Df8x8e7UdCWT3375oVryE2xMlnRMaKvNy6Rc7ovLs1s3wMdmvw==",
                 SecurityStamp = "58debd59-dc2e-4cda-aa6c-e7f1d5f23982",
@@ -36,35 +40,57 @@ namespace TrainingSystem.Entities
                 LockoutEndDateUtc = null,
                 AccessFailedCount = 0,
                 UserName = "abutnaru@gmail.com"
-            });
+            };
+            var student2 = new AspNetUsers
+            {
+                Id = student2UserId,
+                Email = "student2@gmail.com",
+                EmailConfirmed = false,
+                PasswordHash = "AJeirg3g2RPE32a3Df8x8e7UdCWT3375oVryE2xMlnRMaKvNy6Rc7ovLs1s3wMdmvw==",
+                SecurityStamp = "58debd59-dc2e-4cda-aa6c-e7f1d5f23982",
+                PhoneNumber = null,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnabled = true,
+                LockoutEndDateUtc = null,
+                AccessFailedCount = 0,
+                UserName = "abutnaru@akcedo.com"
+            };
+            context.AspNetUsers.Add(student1);
+            context.AspNetUsers.Add(student2);
 
             context.SaveChanges();
 
 
 
-            var roadMap = new RoadMap("1111", "11111", teacherUserId);
-            context.RoadMaps.Add(roadMap);
+            //var roadMap = new RoadMap("1111", "11111", teacherUserId);
+            //context.RoadMaps.Add(roadMap);
 
-            var road = new Road("2222", "2222", teacherUserId, roadMap);
-            context.Roads.Add(road);
+            //var road = new Road("2222", "2222", teacherUserId, roadMap);
+            //context.Roads.Add(road);
 
-            var roadStep = new RoadStep("333", "333", teacherUserId, road);
-            context.RoadSteps.Add(roadStep);
+            //var roadStep = new RoadStep("333", "333", teacherUserId, road);
+            //context.RoadSteps.Add(roadStep);
 
-            var teacher = new Teacher(teacherUserId);
-            context.Teachers.Add(teacher);
-            teacher.AddRoadStep(roadStep);
+            //var teacher = new Teacher(teacherUserId);
+            //context.Teachers.Add(teacher);
+            //teacher.AddRoadStep(roadStep);
 
-            var resource = new StepResource("444", "444", teacherUserId, roadStep);
-            context.StepResources.Add(resource);
-            var exercise = new StepExercise("444", "444", teacherUserId, roadStep);
-            context.StepExercises.Add(exercise);
+            //var resource = new StepResource("444", "444", teacherUserId, roadStep);
+            //context.StepResources.Add(resource);
+            //var exercise = new StepExercise("444", "444", teacherUserId, roadStep);
+            //context.StepExercises.Add(exercise);
 
-            var student = new Student(studentUserId);
-            context.Students.Add(student);
+            //var student = new Student(studentUserId);
+            //context.Students.Add(student);
 
-            var studentRoadStep = new StudentXRoadStep(student, roadStep, LearningStatus.StudyingResources);
-            context.StudentXRoadSteps.Add(studentRoadStep);
+            //var studentRoadStep = new StudentXRoadStep(student, roadStep, LearningStatus.StudyingResources);
+            //context.StudentXRoadSteps.Add(studentRoadStep);
+
+            var trainingGroup = new TrainingGroup("learners", "learn .Net", teacherUserId);
+            trainingGroup.GroupMembers.Add(new GroupMember(trainingGroup, teacher, true, false));
+            trainingGroup.GroupMembers.Add(new GroupMember(trainingGroup, student1, false, true));
+            trainingGroup.GroupMembers.Add(new GroupMember(trainingGroup, student2, false, true));
 
             context.SaveChanges();
         }
