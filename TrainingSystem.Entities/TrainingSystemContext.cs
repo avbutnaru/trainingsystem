@@ -18,6 +18,7 @@ namespace TrainingSystem.Entities
         public DbSet<ExerciseReview> ExerciseReviews { get; set; }
         public DbSet<TrainingGroup> TrainingGroups { get; set; }
         public DbSet<GroupMember> GroupMembers { get; set; }
+        public DbSet<TrainingTask> TrainingTasks { get; set; }
         public DbSet<GroupMemberForRoad> GroupMemberForRoads { get; set; }
         public DbSet<TrainingGroupXRoad> TrainingGroupXRoads { get; set; }
         public DbSet<StepResource> StepResources { get; set; }
@@ -37,6 +38,10 @@ namespace TrainingSystem.Entities
                 .HasRequired(p =>p.TrainingGroupXRoad)
                 .WithMany(p => p.GroupMembersForRoad)
                 .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<TrainingTask>()
+                .HasOptional(p => p.MemberActing)
+                .WithMany(p => p.TrainingTasks);
         }
     }
 }

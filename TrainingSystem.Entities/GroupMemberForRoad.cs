@@ -26,7 +26,7 @@ namespace TrainingSystem.Entities
         public bool CanPrepareContent { get; set; }
         public bool ShouldLearn { get; set; }
 
-        public bool HasAnotherTeachingTask
+        public bool HasTeachingTaskToDo
         {
             get
             {

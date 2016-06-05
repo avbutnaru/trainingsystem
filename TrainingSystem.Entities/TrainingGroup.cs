@@ -9,7 +9,6 @@ namespace TrainingSystem.Entities
         protected TrainingGroup()
         {
             TrainingGroupXRoads = new List<TrainingGroupXRoad>();
-            TrainingTasks = new List<TrainingTask>();
         }
 
         public TrainingGroup(string name, string description, string userId)
@@ -19,7 +18,6 @@ namespace TrainingSystem.Entities
             UserId = userId;
 
             TrainingGroupXRoads = new List<TrainingGroupXRoad>();
-            TrainingTasks = new List<TrainingTask>();
         }
 
         public int Id { get; set; }
@@ -29,7 +27,6 @@ namespace TrainingSystem.Entities
         public string UserId { get; set; }
         public IList<GroupMember> GroupMembers { get; set; }
         public IList<TrainingGroupXRoad> TrainingGroupXRoads { get; set; }
-        public IList<TrainingTask> TrainingTasks { get; set; }
         public bool AutomatedTrainingIsActive { get; set; }
 
         public void ActivateRoad(Road road)
@@ -57,17 +54,19 @@ namespace TrainingSystem.Entities
         {
             var ret = new List<TrainingTask>();
 
-            var groupMemberWithNeed = GetFirstGroupMemberWhoHasANeed();
+            var groupMembersRemainingWithNeed = GroupMembers.ToList();
+
+            var groupMemberWithNeed = GetFirstGroupMemberWhoHasANeed(groupMembersRemainingWithNeed);
             while (groupMemberWithNeed != null)
             {
                 var trainingNeed = groupMemberWithNeed.AspNetUser.CalculateNeed(this);
                 if (!ret.Any(p => p.SolvesNeed(trainingNeed)))
                 {
                     var solutionForNeed = DefineSolutionForNeed(trainingNeed, groupMemberWithNeed);
-                    TrainingTasks.Add(solutionForNeed);
                     ret.Add(solutionForNeed);
                 }
-                groupMemberWithNeed = GetFirstGroupMemberWhoHasANeed();
+                groupMembersRemainingWithNeed.Remove(groupMemberWithNeed);
+                groupMemberWithNeed = GetFirstGroupMemberWhoHasANeed(groupMembersRemainingWithNeed);
             }
 
             return ret;
@@ -85,6 +84,10 @@ namespace TrainingSystem.Entities
                         var road = trainingGroupXRoad.Road;
                         foreach (var roadXRoadStep in road.RoadXRoadSteps)
                         {
+                            if (groupMemberWithNeed.AspNetUser.Student != null && groupMemberWithNeed.AspNetUser.Student.HasGraduated(roadXRoadStep.RoadStep))
+                            {
+                                continue;
+                            }
                             availableRoadSteps.Add(roadXRoadStep.RoadStep);
                             break;
                         }
@@ -92,22 +95,24 @@ namespace TrainingSystem.Entities
 
                     if (availableRoadSteps.Count > 0)
                     {
-                        return new TrainingTask(groupMemberWithNeed.AspNetUser, TrainingTaskType.StartOneOfRoadSteps,
-                            availableRoadSteps);
+                        return groupMemberWithNeed.AspNetUser.AddTask(TrainingTaskType.StartOneOfRoadSteps, availableRoadSteps);
                     }
+
+                    var teacher = FindTeacherToPrepareContent();
+                    return teacher.AddTask(TrainingTaskType.PrepareContent, groupMemberWithNeed.AspNetUser);
                 }
             }
             else if (trainingNeed.NeedsContent)
             {
                 var roadStep = trainingNeed.RoadStep;
                 var teacher = FindTeacherToPrepareContent(roadStep);
-                return new TrainingTask(teacher, TrainingTaskType.PrepareContent, new List<RoadStep> {roadStep});
+                return teacher.AddTask(TrainingTaskType.PrepareContent, new List<RoadStep> { roadStep });
             }
             else if (trainingNeed.NeedsExercise)
             {
                 var roadStep = trainingNeed.RoadStep;
                 var teacher = FindTeacherToPrepareContent(roadStep);
-                return new TrainingTask(teacher, TrainingTaskType.PrepareExercise, new List<RoadStep> {roadStep});
+                return teacher.AddTask(TrainingTaskType.PrepareExercise, new List<RoadStep> { roadStep });
             }
             throw new NotImplementedException();
         }
@@ -118,7 +123,28 @@ namespace TrainingSystem.Entities
             {
                 var teacher =
                     trainingGroupXRoad.GroupMembersForRoad.FirstOrDefault(
-                        p => p.CanPrepareContent && !p.HasAnotherTeachingTask);
+                        p => p.CanPrepareContent && !p.HasTeachingTaskToDo);
+
+                if (teacher != null)
+                {
+                    return teacher.GroupMember.AspNetUser;
+                }
+            }
+            return null;
+        }
+
+        private AspNetUsers FindTeacherToPrepareContent()
+        {
+            if (TrainingGroupXRoads.Count == 0)
+            {
+                return GroupMembers.FirstOrDefault(p => p.IsTeacher).AspNetUser;
+            }
+
+            foreach (var trainingGroupXRoad in TrainingGroupXRoads)
+            {
+                var teacher =
+                    trainingGroupXRoad.GroupMembersForRoad.FirstOrDefault(
+                        p => p.CanPrepareContent && !p.HasTeachingTaskToDo);
 
                 if (teacher != null)
                 {
@@ -138,9 +164,9 @@ namespace TrainingSystem.Entities
             return TrainingGroupXRoads.Where(p => p.GroupMembersForRoad.Any(u => u.GroupMember.Id == groupMemberWithNeed.Id && u.ShouldLearn));
         }
 
-        private GroupMember GetFirstGroupMemberWhoHasANeed()
+        private GroupMember GetFirstGroupMemberWhoHasANeed(IList<GroupMember> groupMembers)
         {
-            foreach (var groupMember in GroupMembers.Where(p => p.IsStudent))
+            foreach (var groupMember in groupMembers.Where(p => p.IsStudent))
             {
                 var student = groupMember.AspNetUser.Student;
                 if (student == null)

@@ -18,14 +18,14 @@ namespace TrainingSystem.Entities
             StudentXRoadSteps = new List<StudentXRoadStep>();
         }
 
-        public Student(string parentUserId)
+        public Student(AspNetUsers parentUser)
         {
-            ParentUserId = parentUserId;
+            ParentUser = parentUser;
             StudentXRoadSteps = new List<StudentXRoadStep>();
         }
 
         public int Id { get; set; }
-        public string ParentUserId { get; set; }
+        public AspNetUsers ParentUser { get; set; }
 
         public IList<StudentXRoadStep> StudentXRoadSteps { get; set; }
 
@@ -123,6 +123,11 @@ namespace TrainingSystem.Entities
             }
 
             return null;
+        }
+
+        public bool HasGraduated(RoadStep roadStep)
+        {
+            return StudentXRoadSteps.Any(p => p.RoadStep.Id == roadStep.Id && p.HasGraduated());
         }
     }
 }

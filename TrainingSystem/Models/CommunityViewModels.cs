@@ -17,6 +17,7 @@ namespace TrainingSystem.Models
         public IList<ExerciseReview> ReviewsToDo { get; set; }
         public IList<ExerciseReview> ReviewsReceived { get; set; }
         public IList<TrainingGroup> TrainingGroups { get; set; }
+        public IList<TrainingTask> TrainingTasks { get; set; }
     }
 
     public class DoReviewViewModel
@@ -62,6 +63,11 @@ namespace TrainingSystem.Models
 
         public bool IsTeacher { get; set; }
         public bool IsStudent { get; set; }
+    }
+
+    public class IterateGroupTrainingViewModel
+    {
+        public string Summary { get; set; }
     }
 
     public class RoadForGroup

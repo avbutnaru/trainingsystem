@@ -31,10 +31,24 @@ namespace TrainingSystem.Entities
         {
             if (Student == null)
             {
-                return null;
+                return new TrainingNeed(true, null, null);
             }
 
             return Student.CalculateNeed(trainingGroup);
+        }
+
+        public TrainingTask AddTask(TrainingTaskType taskType, AspNetUsers student)
+        {
+            var trainingTask = new TrainingTask(this, taskType, student);
+            TrainingTasks.Add(trainingTask);
+            return trainingTask;
+        }
+
+        public TrainingTask AddTask(TrainingTaskType taskType, IList<RoadStep> roadSteps)
+        {
+            var trainingTask = new TrainingTask(this, taskType, roadSteps);
+            TrainingTasks.Add(trainingTask);
+            return trainingTask;
         }
     }
 }

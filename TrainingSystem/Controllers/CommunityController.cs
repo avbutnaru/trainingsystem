@@ -43,6 +43,13 @@ namespace TrainingSystem.Controllers
             model.TrainingGroups =
                 Db.TrainingGroups.Where(p => p.UserId == CurrentUserId).ToList();
 
+            model.TrainingTasks =
+                Db.TrainingTasks
+                .Include(p => p.MemberReceiving)
+                .Include(p => p.MemberActing)
+                .Include(p => p.RoadStep)
+                .Where(p => p.MemberActing.Id == CurrentUserId).ToList();
+
             return View(model);
         }
 
@@ -243,11 +250,41 @@ namespace TrainingSystem.Controllers
         public ActionResult IterateGroupTraining(int id)
         {
             var trainingGroup = Db.TrainingGroups
+                .Include(p => p.TrainingGroupXRoads.Select(u => u.GroupMembersForRoad.Select(a => a.GroupMember)))
+                .Include(p => p.TrainingGroupXRoads.Select(u => u.Road).Select(a => a.RoadXRoadSteps.Select(b => b.RoadStep)))
+                .Include(p => p.GroupMembers.Select(u => u.AspNetUser).Select(a => a.Student).Select(b => b.StudentXRoadSteps.Select(c => c.RoadStep)))
+                .Include(p => p.GroupMembers.Select(u => u.AspNetUser).Select(a => a.TrainingTasks.Select(b => b.MemberActing).Select(c => c.Student)))
                 .FirstOrDefault(p => p.Id == id);
 
             IList<TrainingTask> trainingTasks = trainingGroup.IterateTraining();
 
-            return View();
+            Db.SaveChanges();
+
+            var summary = string.Empty;
+            foreach (var trainingTask in trainingTasks)
+            {
+                summary += trainingTask + "<br />";
+            }
+
+            var model = new IterateGroupTrainingViewModel();
+            model.Summary = summary;
+            return View(model);
+        }
+
+        public ActionResult TaskIsStarted(int id)
+        {
+            var task = Db.TrainingTasks.FirstOrDefault(p => p.Id == id);
+            task.TrainingTaskStatus = TrainingTaskStatus.InProgress;
+            Db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult TaskIsDone(int id)
+        {
+            var task = Db.TrainingTasks.FirstOrDefault(p => p.Id == id);
+            task.TrainingTaskStatus = TrainingTaskStatus.Done;
+            Db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

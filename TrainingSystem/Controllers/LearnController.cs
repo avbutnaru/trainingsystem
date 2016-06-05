@@ -29,7 +29,7 @@ namespace TrainingSystem.Controllers
             var student = CurrentStudent;
             if (student == null)
             {
-                student = new Student(CurrentUserId);
+                student = new Student(CurrentUser);
                 Db.Students.Add(student);
             }
 

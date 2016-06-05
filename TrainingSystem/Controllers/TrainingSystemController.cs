@@ -15,9 +15,14 @@ namespace TrainingSystem.Controllers
             get { return User.Identity.GetUserId(); }
         }
 
+        protected AspNetUsers CurrentUser
+        {
+            get { return Db.AspNetUsers.FirstOrDefault(p => p.Id == CurrentUserId); }
+        }
+
         protected Student CurrentStudent
         {
-            get { return Db.Students.FirstOrDefault(p => p.ParentUserId == CurrentUserId); }
+            get { return Db.Students.FirstOrDefault(p => p.ParentUser.Id == CurrentUserId); }
         }
 
         protected Teacher CurrentTeacher
@@ -30,7 +35,7 @@ namespace TrainingSystem.Controllers
             get { return Db.Students
                     .Include(p => p.StudentXRoadSteps.Select(u => u.RoadStep))
                     .Include(p => p.StudentXRoadSteps.Select(u => u.StudentExercises.Select(w => w.StepExercise)))
-                    .FirstOrDefault(p => p.ParentUserId == CurrentUserId); }
+                    .FirstOrDefault(p => p.ParentUser.Id == CurrentUserId); }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model TrainingSystem.Models.CommunityMainViewModel
+﻿@using TrainingSystem.Entities
+@model TrainingSystem.Models.CommunityMainViewModel
 @{
     ViewBag.Title = "Community";
 }
@@ -82,4 +83,36 @@
         }
     }
     @Html.ActionLink("Add Training Group", "EditGroup")
+    <hr />
+    @{
+        if (Model.TrainingTasks.Count > 0)
+        {
+            <h4>Training Tasks</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var task in Model.TrainingTasks)
+                    {
+                        <tr>
+                            <td>@task.ToString()</td>
+                            <td>@task.TrainingTaskStatus</td>
+                            <td>
+                                @if (task.TrainingTaskStatus == TrainingTaskStatus.Waiting)
+                                {
+                                    @Html.ActionLink("I have started this task", "TaskIsStarted", "Community", new { @id = task.Id }, new { })
+                                }
+                                else if (task.TrainingTaskStatus == TrainingTaskStatus.InProgress)
+                                {
+                                    @Html.ActionLink("I have finished this task", "TaskIsDone", "Community", new { @id = task.Id }, new { })
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No tasks waiting in queue!</p>
+        }
+    }
 </div>
