@@ -120,5 +120,39 @@ namespace TrainingSystem.Controllers
             model.Message = "Your message has been sent. Thank you.";
             return View(model);
         }
+
+        public ActionResult People()
+        {
+            var model = new PeopleMainViewModel();
+            model.Users = db.AspNetUsers
+                .ToList();
+            return View(model);
+        }
+
+        public ActionResult ViewProfile(string id)
+        {
+            var model = new ProfileViewModel();
+
+            model.User = Db.AspNetUsers.FirstOrDefault(p => p.Id == id);
+            model.ReviewsReceived = Db.ExerciseReviews
+                .Include(p => p.StudentExercise.StepExercise)
+                .Where(p => p.StudentExercise.StudentXRoadStep.Student.ParentUser.Id == id && p.ExerciseReviewStatus == ExerciseReviewStatus.Reviewed).ToList();
+            model.GroupMembers = Db.GroupMembers
+                .Include(p => p.TrainingGroup)
+                .Where(p => p.AspNetUser.Id == id).ToList();
+            model.StudentExercises =
+                Db.StudentExercises
+                .Include(p => p.StepExercise)
+                .Where(
+                    p => p.StudentXRoadStep.Student.ParentUser.Id == id && p.ExerciseStatus == ExerciseStatus.Finished).ToList();
+            model.RoadSteps = Db.StudentXRoadSteps
+                .Include(p => p.RoadStep)
+                .Where(p => p.Student.ParentUser.Id == id).ToList();
+            model.ReviewsGiven = Db.ExerciseReviews
+                .Include(p => p.StudentExercise.StepExercise)
+                .Where(p => p.Teacher.ParentUser.Id == id).ToList();
+
+            return View(model);
+        }
     }
 }

@@ -11,9 +11,24 @@ namespace TrainingSystem.Models
         public IList<RoadMap> RoadMaps { get; set; }
     }
 
+    public class PeopleMainViewModel
+    {
+        public IList<AspNetUsers> Users { get; set; }
+    }
+
     public class RoadMapMainViewModel
     {
         public RoadMap RoadMap { get; set; }
+    }
+
+    public class ProfileViewModel
+    {
+        public IList<ExerciseReview> ReviewsReceived { get; set; }
+        public IList<ExerciseReview> ReviewsGiven { get; set; }
+        public IList<GroupMember> GroupMembers { get; set; }
+        public IList<StudentExercise> StudentExercises { get; set; }
+        public IList<StudentXRoadStep> RoadSteps { get; set; }
+        public AspNetUsers User { get; set; }
     }
 
     public class RoadMainViewModel

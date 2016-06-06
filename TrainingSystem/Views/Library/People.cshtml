@@ -1,0 +1,33 @@
+﻿@model TrainingSystem.Models.PeopleMainViewModel
+@{
+    ViewBag.Title = "People";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="jumbotron">
+    @{
+        if (Model.Users.Count > 0)
+        {
+            <h4>People</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                @Html.ActionLink("View Profile", "ViewProfile", new { @id = user.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No people yet!</p>
+        }
+    }
+</div>

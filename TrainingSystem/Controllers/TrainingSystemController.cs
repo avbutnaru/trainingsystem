@@ -27,7 +27,7 @@ namespace TrainingSystem.Controllers
 
         protected Teacher CurrentTeacher
         {
-            get { return Db.Teachers.FirstOrDefault(p => p.ParentUserId == CurrentUserId); }
+            get { return Db.Teachers.FirstOrDefault(p => p.ParentUser.Id == CurrentUserId); }
         }
 
         protected Student CurrentStudentWithRoadSteps

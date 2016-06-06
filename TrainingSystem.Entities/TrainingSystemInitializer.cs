@@ -80,7 +80,7 @@ namespace TrainingSystem.Entities
             var roadStep = new RoadStep("333", "333", teacherUserId, road);
             context.RoadSteps.Add(roadStep);
 
-            var teacherRole = new Teacher(teacherUserId);
+            var teacherRole = new Teacher(teacher);
             context.Teachers.Add(teacherRole);
             teacherRole.AddRoadStep(roadStep);
 

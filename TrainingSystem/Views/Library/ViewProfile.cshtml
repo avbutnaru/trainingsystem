@@ -1,0 +1,130 @@
+﻿@model TrainingSystem.Models.ProfileViewModel
+@{
+    ViewBag.Title = "View Profile";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+<div class="jumbotron">
+    <h3>Profile of user @Model.User.UserName</h3>
+
+    <hr />
+    @{
+        if (Model.GroupMembers.Count > 0)
+        {
+            <h4>Groups</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var step in Model.GroupMembers)
+                {
+                        <tr>
+                            <td>@step.TrainingGroup.Name</td>
+                            <td>@step.TrainingGroup.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No training groups yet!</p>
+        }
+    }
+    
+    <hr/>
+    @{
+        if (Model.RoadSteps.Count > 0)
+        {
+            <h4>Road Steps</h4>
+            <table class="table">
+                <tbody>
+                @foreach (var step in Model.RoadSteps)
+                {
+                    <tr>
+                        <td>@step.RoadStep.Name</td>
+                        <td>@step.RoadStep.Description</td>
+                        <td>@step.LearningStatus</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No road steps yet!</p>
+        }
+    }
+
+    <hr />
+    @{
+        if (Model.StudentExercises.Count > 0)
+        {
+            <h4>Exercises</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var step in Model.StudentExercises)
+                {
+                        <tr>
+                            <td>@step.StepExercise.Name</td>
+                            <td>@step.StepExercise.Description</td>
+                            <td>@step.ExerciseStatus</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No exercises yet!</p>
+        }
+    }
+
+    <hr />
+    @{
+        if (Model.ReviewsReceived.Count > 0)
+        {
+            <h4>Reviews received</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var step in Model.ReviewsReceived)
+                {
+                        <tr>
+                            <td>@step.StudentExercise.StepExercise.Name</td>
+                            <td>@step.ExerciseReviewStatus</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No reviews yet!</p>
+        }
+    }
+
+    <hr />
+    @{
+        if (Model.ReviewsGiven.Count > 0)
+        {
+            <h4>Reviews given</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var step in Model.ReviewsGiven)
+                {
+                        <tr>
+                            <td>@step.StudentExercise.StepExercise.Name</td>
+                            <td>@step.ExerciseReviewStatus</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No reviews yet!</p>
+        }
+    }
+
+</div>

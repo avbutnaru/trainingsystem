@@ -9,13 +9,13 @@ namespace TrainingSystem.Entities
 
         }
 
-        public Teacher(string parentUserId)
+        public Teacher(AspNetUsers parentUser)
         {
-            ParentUserId = parentUserId;
+            ParentUser = parentUser;
         }
 
         public int Id { get; set; }
-        public string ParentUserId { get; set; }
+        public AspNetUsers ParentUser { get; set; }
         public IList<TeacherXRoadStep> TeacherXRoadSteps { get; set; }
         public IList<ExerciseReview> ExerciseReviews { get; set; }
 

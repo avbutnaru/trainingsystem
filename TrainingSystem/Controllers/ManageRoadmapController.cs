@@ -195,21 +195,19 @@ namespace TrainingSystem.Controllers
             }
             else
             {
-                var currentUserId = User.Identity.GetUserId();
-
                 Road road = null;
                 if (model.RoadId != null)
                 {
                     road = Db.Roads.FirstOrDefault(p => p.Id == model.RoadId);
                 }
 
-                roadStep = new RoadStep(model.Name, model.Description, currentUserId, road);
+                roadStep = new RoadStep(model.Name, model.Description, CurrentUserId, road);
                 Db.RoadSteps.Add(roadStep);
 
                 var currentTeacher = CurrentTeacher;
                 if (currentTeacher == null)
                 {
-                    currentTeacher = new Teacher(currentUserId);
+                    currentTeacher = new Teacher(CurrentUser);
                     Db.Teachers.Add(currentTeacher);
                 }
 

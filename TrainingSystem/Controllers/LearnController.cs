@@ -258,6 +258,9 @@ namespace TrainingSystem.Controllers
             var reviewer = _exerciseReviewerFinder.Find(roadStep, allTeachers);
             reviewer.PrepareForReview(roadStep, model.StepExerciseId, currentStudent);
 
+            Db.TrainingMessages.Add(new TrainingMessage("Review is required for " + roadStep.Name, reviewer.ParentUser,
+                reviewer.ParentUser, null, null, roadStep));
+
             Db.SaveChanges();
 
             return RedirectToAction("Step", "Library", new { @id = model.RoadStepId });
