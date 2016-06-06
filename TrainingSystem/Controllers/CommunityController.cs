@@ -50,6 +50,14 @@ namespace TrainingSystem.Controllers
                 .Include(p => p.RoadStep)
                 .Where(p => p.MemberActing.Id == CurrentUserId).ToList();
 
+            model.TrainingMessages =
+                Db.TrainingMessages
+                .Include(p => p.RoadStep)
+                .Include(p => p.RoadMap)
+                .Include(p => p.Road)
+                .Include(p => p.Sender)
+                .Where(p => p.Recipient.Id == CurrentUserId).ToList();
+
             return View(model);
         }
 

@@ -53,6 +53,7 @@
     <Compile Include="ExerciseReview.cs" />
     <Compile Include="GroupMember.cs" />
     <Compile Include="GroupMemberForRoad.cs" />
+    <Compile Include="TrainingMessage.cs" />
     <Compile Include="Road.cs" />
     <Compile Include="RoadMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

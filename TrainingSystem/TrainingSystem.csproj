@@ -264,6 +264,7 @@
     <Content Include="Views\Shared\EditorTemplates\RoadForGroupMember.cshtml" />
     <Content Include="Views\Community\ActivateRoadForGroup.cshtml" />
     <Content Include="Views\Community\IterateGroupTraining.cshtml" />
+    <Content Include="Views\Library\SendMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

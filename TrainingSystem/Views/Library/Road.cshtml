@@ -12,6 +12,8 @@
     <hr/>
     <p>@Model.Road.Description</p>
     <hr />
+    @Html.ActionLink("Learn", "LearnRoad", "Learn", new { @id = Model.Road.Id }, new { })
+    <hr />
     @{
         if (Model.Road.RoadXRoadSteps.Count > 0)
         {
@@ -36,4 +38,7 @@
             <p>No roads yet!</p>
         }
     }
+    <hr />
+    <p>Ask a question or suggest an improvement for this road:</p>
+    @Html.ActionLink("Send message", "SendMessage", new { @roadId = Model.Road.Id })
 </div>

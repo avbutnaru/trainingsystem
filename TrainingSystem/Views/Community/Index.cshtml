@@ -115,4 +115,27 @@
             <p>No tasks waiting in queue!</p>
         }
     }
+
+    <hr />
+    @{
+        if (Model.TrainingMessages.Count > 0)
+        {
+            <h4>Training Messages</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var message in Model.TrainingMessages)
+                    {
+                        <tr>
+                            <td>@message.Sender.UserName</td>
+                            <td>@message.Content</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No tasks waiting in queue!</p>
+        }
+    }
 </div>

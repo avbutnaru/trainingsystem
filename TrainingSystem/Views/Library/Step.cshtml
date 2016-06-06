@@ -91,4 +91,7 @@
             <p>No exercises yet!</p>
         }
     }
+    <hr/>
+        <p>Ask a question, propose resources or exercises, or suggest improvements for this road step:</p>
+        @Html.ActionLink("Send message", "SendMessage", new { @roadStepId = Model.RoadStep.Id })
 </div>

@@ -52,5 +52,73 @@ namespace TrainingSystem.Controllers
             model.Message = message;
             return View(model);
         }
+
+        public ActionResult SendMessage(int? roadStepId, int? roadMapId, int? roadId)
+        {
+            var model = new SendMessageViewModel();
+            if (CurrentUserId == null)
+            {
+                model.Message = "Please login into your account to send messages.";
+                return View(model);
+            }
+
+            if (model.RoadStepId != null)
+            {
+                var roadStep = Db.RoadSteps.FirstOrDefault(p => p.Id == model.RoadStepId.Value);
+                model.RoadStep = roadStep;
+                model.RoadStepId = roadStepId;
+            }
+            if (model.RoadId != null)
+            {
+                var road = Db.Roads.FirstOrDefault(p => p.Id == model.RoadId.Value);
+                model.Road = road;
+                model.RoadId = roadId;
+            }
+            if (model.RoadMapId != null)
+            {
+                var roadMap = Db.RoadMaps.FirstOrDefault(p => p.Id == model.RoadMapId.Value);
+                model.RoadMap = roadMap;
+                model.RoadMapId = roadMapId;
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SendMessage(SendMessageViewModel model)
+        {
+            if (CurrentUserId == null)
+            {
+                model.Message = "Please login into your account to send messages.";
+                return View(model);
+            }
+
+            var sender = CurrentUser;
+            AspNetUsers recipient = null;
+            RoadStep roadStep = null;
+            if (model.RoadStepId != null)
+            {
+                roadStep = Db.RoadSteps.FirstOrDefault(p => p.Id == model.RoadStepId.Value);
+                recipient = Db.AspNetUsers.FirstOrDefault(p => p.Id == roadStep.UserId);
+            }
+            Road road = null;
+            if (model.RoadId != null)
+            {
+                road = Db.Roads.FirstOrDefault(p => p.Id == model.RoadId.Value);
+                recipient = Db.AspNetUsers.FirstOrDefault(p => p.Id == road.UserId);
+            }
+            RoadMap roadMap = null;
+            if (model.RoadMapId != null)
+            {
+                roadMap = Db.RoadMaps.FirstOrDefault(p => p.Id == model.RoadMapId.Value);
+                recipient = Db.AspNetUsers.FirstOrDefault(p => p.Id == roadMap.UserId);
+            }
+
+            Db.TrainingMessages.Add(new TrainingMessage(model.Content, sender, recipient, road, roadMap, roadStep));
+            Db.SaveChanges();
+
+            model.Message = "Your message has been sent. Thank you.";
+            return View(model);
+        }
     }
 }

@@ -41,6 +41,78 @@ namespace TrainingSystem.Controllers
             return RedirectToAction("Step", "Library", new { @id = id });
         }
 
+        public ActionResult LearnRoadMap(int id)
+        {
+            var roadMap = Db.RoadMaps.FirstOrDefault(p => p.Id == id);
+            var firstStepInRoadMap = roadMap.GetStartingStep();
+
+            if (firstStepInRoadMap == null)
+            {
+                var user = Db.AspNetUsers.FirstOrDefault(p => p.Id == roadMap.UserId);
+                Db.TrainingMessages.Add(
+                    new TrainingMessage(
+                        "Students are trying to learn roadMap " + roadMap.Name + ", but there are no road steps.", user,
+                        user, null, roadMap, null));
+                Db.SaveChanges();
+                return RedirectToAction("Index", "Library");
+            }
+
+            if (CurrentUserId == null)
+            {
+                return RedirectToAction("Step", "Library", new { @id = firstStepInRoadMap.Id, @message = "Please login into your account to start learning." });
+            }
+
+            var student = CurrentStudent;
+            if (student == null)
+            {
+                student = new Student(CurrentUser);
+                Db.Students.Add(student);
+            }
+
+            var roadStep = Db.RoadSteps.FirstOrDefault(p => p.Id == firstStepInRoadMap.Id);
+            var studentXRoadStep = new StudentXRoadStep(student, roadStep, LearningStatus.StudyingResources);
+            student.StudentXRoadSteps.Add(studentXRoadStep);
+            Db.SaveChanges();
+
+            return RedirectToAction("Step", "Library", new { @id = id });
+        }
+
+        public ActionResult LearnRoad(int id)
+        {
+            var road = Db.Roads.FirstOrDefault(p => p.Id == id);
+            var firstStepInRoad = road.GetStartingStep();
+
+            if (firstStepInRoad == null)
+            {
+                var user = Db.AspNetUsers.FirstOrDefault(p => p.Id == road.UserId);
+                Db.TrainingMessages.Add(
+                    new TrainingMessage(
+                        "Students are trying to learn road " + road.Name + ", but there are no road steps.", user,
+                        user, road, null, null));
+                Db.SaveChanges();
+                return RedirectToAction("Index", "Library");
+            }
+
+            if (CurrentUserId == null)
+            {
+                return RedirectToAction("Step", "Library", new { @id = firstStepInRoad.Id, @message = "Please login into your account to start learning." });
+            }
+
+            var student = CurrentStudent;
+            if (student == null)
+            {
+                student = new Student(CurrentUser);
+                Db.Students.Add(student);
+            }
+
+            var roadStep = Db.RoadSteps.FirstOrDefault(p => p.Id == firstStepInRoad.Id);
+            var studentXRoadStep = new StudentXRoadStep(student, roadStep, LearningStatus.StudyingResources);
+            student.StudentXRoadSteps.Add(studentXRoadStep);
+            Db.SaveChanges();
+
+            return RedirectToAction("Step", "Library", new { @id = id });
+        }
+
         public ActionResult FinishedResources(int id)
         {
             if (CurrentUserId == null)

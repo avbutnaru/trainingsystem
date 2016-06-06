@@ -29,6 +29,7 @@ namespace TrainingSystem.Entities
         public DbSet<StudentResourceRating> StudentResourceRatings { get; set; }
         public DbSet<StudentExercise> StudentExercises { get; set; }
         public DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public DbSet<TrainingMessage> TrainingMessages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,6 +43,10 @@ namespace TrainingSystem.Entities
             modelBuilder.Entity<TrainingTask>()
                 .HasOptional(p => p.MemberActing)
                 .WithMany(p => p.TrainingTasks);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasOptional(f => f.Student)
+                .WithRequired(s => s.ParentUser);
         }
     }
 }

@@ -1,0 +1,39 @@
+﻿@model TrainingSystem.Models.SendMessageViewModel
+@{
+    ViewBag.Title = "Send message";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("SendMessage", "Library", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Send Message</h4>
+    <hr/>
+
+    if (Model.Message != null)
+    {
+        <p class="text-danger">@Model.Message</p>
+    }
+    <hr/>
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Content, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Content, new {@class = "form-control"})
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.RoadId)
+    @Html.HiddenFor(m => m.RoadMapId)
+    @Html.HiddenFor(m => m.RoadStepId)
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Send message" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

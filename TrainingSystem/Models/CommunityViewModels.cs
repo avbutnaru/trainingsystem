@@ -18,6 +18,7 @@ namespace TrainingSystem.Models
         public IList<ExerciseReview> ReviewsReceived { get; set; }
         public IList<TrainingGroup> TrainingGroups { get; set; }
         public IList<TrainingTask> TrainingTasks { get; set; }
+        public List<TrainingMessage> TrainingMessages { get; set; }
     }
 
     public class DoReviewViewModel

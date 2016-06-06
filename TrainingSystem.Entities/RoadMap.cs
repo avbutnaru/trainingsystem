@@ -23,5 +23,18 @@ namespace TrainingSystem.Entities
         public string UserId { get; set; }
 
         public IList<RoadmapXRoad> RoadmapXRoads { get; set; }
+
+        public RoadStep GetStartingStep()
+        {
+            foreach (var roadmapXRoad in RoadmapXRoads)
+            {
+                var step = roadmapXRoad.Road.GetStartingStep();
+                if (step != null)
+                {
+                    return step;
+                }
+            }
+            return null;
+        }
     }
 }
