@@ -20,6 +20,27 @@ namespace TrainingSystem.Controllers
             return View();
         }
 
+        public ActionResult Concepts()
+        {
+            ViewBag.Message = "";
+
+            return View();
+        }
+
+        public ActionResult HowWeHelpTeams()
+        {
+            ViewBag.Message = "";
+
+            return View();
+        }
+
+        public ActionResult Faq()
+        {
+            ViewBag.Message = "";
+
+            return View();
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

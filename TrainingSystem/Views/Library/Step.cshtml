@@ -42,6 +42,7 @@
                         <tr>
                             <td>@step.Name</td>
                             <td>@step.Description</td>
+                            <td>@Model.RatingFor(step)</td>
                         </tr>
                     }
                 </tbody>
@@ -64,6 +65,7 @@
                         <tr>
                             <td>@exercise.Name</td>
                             <td>@exercise.Description</td>
+                            <td>@Model.RatingFor(exercise)</td>
                             <td>
                                 @if (Model.StudentXRoadStep != null && Model.StudentXRoadStep.LearningStatus == LearningStatus.FinishedResources)
                                 {

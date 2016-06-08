@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using TrainingSystem.Entities;
@@ -41,6 +43,28 @@ namespace TrainingSystem.Models
         public RoadStep RoadStep { get; set; }
         public StudentXRoadStep StudentXRoadStep { get; set; }
         public string Message { get; set; }
+        public List<StudentResourceRating> ResourceRatings { get; set; }
+        public List<StudentExercise> ExerciseRatings { get; set; }
+
+        public RatingValue? RatingFor(StepResource stepResource)
+        {
+            var ratings = ResourceRatings.Where(p => p.StepResource.Id == stepResource.Id).ToList();
+            if (ratings.Count == 0)
+            {
+                return null;
+            }
+            return (RatingValue)Math.Floor((decimal)ratings.Sum(p => (int) p.RatingValue) / ratings.Count());
+        }
+
+        public RatingValue? RatingFor(StepExercise stepExercise)
+        {
+            var ratings = ExerciseRatings.Where(p => p.StepExercise.Id == stepExercise.Id).ToList();
+            if (ratings.Count == 0)
+            {
+                return null;
+            }
+            return (RatingValue)Math.Floor((decimal)ratings.Sum(p => (int)p.RatingValue) / ratings.Count());
+        }
     }
 
     public class SendMessageViewModel

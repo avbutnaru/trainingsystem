@@ -267,6 +267,9 @@
     <Content Include="Views\Library\SendMessage.cshtml" />
     <Content Include="Views\Library\People.cshtml" />
     <Content Include="Views\Library\ViewProfile.cshtml" />
+    <Content Include="Views\Home\Concepts.cshtml" />
+    <Content Include="Views\Home\HowWeHelpTeams.cshtml" />
+    <Content Include="Views\Home\Faq.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -49,6 +49,14 @@ namespace TrainingSystem.Controllers
                 model.StudentXRoadStep = student.StudentXRoadSteps.FirstOrDefault(p => p.RoadStep.Id == model.RoadStep.Id);
             }
 
+            model.ResourceRatings = Db.StudentResourceRatings
+                .Include(p => p.StepResource)
+                .ToList();
+            model.ExerciseRatings = Db.StudentExercises
+                .Include(p => p.StepExercise)
+                .Where(p => p.RatingValue != null)
+                .ToList();
+
             model.Message = message;
             return View(model);
         }
