@@ -1,15 +1,14 @@
 ﻿@model TrainingSystem.Models.ActivateRoadForGroupViewModel
 @{
-    ViewBag.Title = "Activate Road For Group";
+    ViewBag.Title = "Activate Road For Training Group";
 }
 
-<h2>@ViewBag.Title.</h2>
+@*<h2>@ViewBag.Title.</h2>*@
 
 @using (Html.BeginForm("ActivateRoadForGroup", "Community", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Activate Road @Model.Road.Name For Group @Model.TrainingGroup.Name</h4>
-    <hr />
+    <h3>Activate Road "@Model.Road.Name" for training group "@Model.TrainingGroup.Name"</h3>
 
     <table class="table">
         <tbody>
@@ -20,7 +19,7 @@
     @Html.HiddenFor(m => m.RoadId)
     @Html.HiddenFor(m => m.TrainingGroupId)
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-10">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>

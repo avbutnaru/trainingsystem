@@ -57,6 +57,10 @@ namespace TrainingSystem.Controllers
                 .Where(p => p.RatingValue != null)
                 .ToList();
 
+            var road = Db.Roads.FirstOrDefault(p => p.RoadXRoadSteps.Any(u => u.RoadStep.Id == id));
+            model.RoadName = road.Name;
+            model.RoadMapName = Db.RoadMaps.FirstOrDefault(p => p.RoadmapXRoads.Any(u => u.Road.Id == road.Id)).Name;
+
             model.Message = message;
             return View(model);
         }

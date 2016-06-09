@@ -31,7 +31,7 @@ namespace TrainingSystem.Entities
             get
             {
                 return
-                    !GroupMember.AspNetUser.TrainingTasks.Any(
+                    GroupMember.AspNetUser.TrainingTasks.Any(
                         p =>
                             (p.TrainingTaskStatus == TrainingTaskStatus.Waiting ||
                              p.TrainingTaskStatus == TrainingTaskStatus.InProgress) && p.IsTeachingTask);

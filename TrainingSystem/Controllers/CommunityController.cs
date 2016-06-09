@@ -260,7 +260,7 @@ namespace TrainingSystem.Controllers
             var trainingGroup = Db.TrainingGroups
                 .Include(p => p.TrainingGroupXRoads.Select(u => u.GroupMembersForRoad.Select(a => a.GroupMember)))
                 .Include(p => p.TrainingGroupXRoads.Select(u => u.Road).Select(a => a.RoadXRoadSteps.Select(b => b.RoadStep)))
-                .Include(p => p.GroupMembers.Select(u => u.AspNetUser).Select(a => a.Student).Select(b => b.StudentXRoadSteps.Select(c => c.RoadStep)))
+                .Include(p => p.GroupMembers.Select(u => u.AspNetUser).Select(a => a.Student).Select(b => b.StudentXRoadSteps.Select(c => c.RoadStep).Select(d => d.StepExercises)))
                 .Include(p => p.GroupMembers.Select(u => u.AspNetUser).Select(a => a.TrainingTasks.Select(b => b.MemberActing).Select(c => c.Student)))
                 .FirstOrDefault(p => p.Id == id);
 

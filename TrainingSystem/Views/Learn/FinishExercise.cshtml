@@ -3,7 +3,7 @@
     ViewBag.Title = "Upload Exercise Solution";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 
@@ -11,14 +11,15 @@
     <h3>
         @Model.RoadStep.Name - @Model.Exercise.Name
     </h3>
-    <hr/>
-    <p>@Model.Exercise.Description</p>
+    <div style="padding-left: 20px; font-size: 14px;">
+        @Html.Raw(Model.Exercise.Description)
+    </div>
     <hr/>
 
     @using (Html.BeginForm("UploadExerciseSolution", "Learn", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <input type="file" name="file" />
-        <input type="submit" name="Submit" id="Submit" value="Upload"/>
+        <input type="submit" name="Submit" id="Submit" value="Upload" class="btn btn-primary btn-lg"/>
         @Html.Hidden("roadStepId", Model.RoadStep.Id)
         @Html.Hidden("exerciseId", Model.Exercise.Id)
     }

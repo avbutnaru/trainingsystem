@@ -12,9 +12,10 @@
         <h3>
             @Model.StepExercise.Name
         </h3>
+        <div style="padding-left: 20px; font-size: 14px;">
+            @Html.Raw(Model.StepExercise.Description)
+        </div>
         <hr />
-<p>@Model.StepExercise.Description</p>
-    <hr/>
         @using (Html.BeginForm("RateExercise", "Learn", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
@@ -35,7 +36,7 @@
             <p>Was there anything required for the exercise that was not covered by the learning resources? What did you find most difficult about the exercise?</p>
             @Html.TextAreaFor(p => p.Comment)
             <hr/>
-            <input type="submit" value="Save" />
+            <input type="submit" value="Send feedback"  class="btn btn-primary btn-lg"/>
         }
 
 </div>

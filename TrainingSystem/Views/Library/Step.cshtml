@@ -4,12 +4,14 @@
     ViewBag.Title = "Road Step";
 }
 
-<h2>@ViewBag.Title.</h2>
+@*<h2>@ViewBag.Title.</h2>*@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 
     <div class="jumbotron">
-        <h3>@Model.RoadStep.Name</h3>
+        <h2>@Model.RoadStep.Name</h2>
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&rArr;&nbsp;@Model.RoadName</h3>
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rArr;&nbsp;@Model.RoadMapName</h3>
         <hr />
 <p>@Model.RoadStep.Description</p>
     <hr/>
@@ -19,18 +21,21 @@
         }
         @if (Model.StudentXRoadStep == null)
         {
-            @Html.ActionLink("Start learning", "LearnStep", "Learn", new {@id = Model.RoadStep.Id}, new {})
+            @Html.ActionLink("Start learning", "LearnStep", "Learn", new {@id = Model.RoadStep.Id}, new { @class = "btn btn-primary btn-lg" })
         }
         else if (Model.StudentXRoadStep.LearningStatus == LearningStatus.StudyingResources)
         {
             <p class="text-success">Please study the resources, and when you are done click on Finished.</p>
-            @Html.ActionLink("Finished studying the resources", "FinishedResources", "Learn", new { @id = Model.RoadStep.Id }, new { })
+            @Html.ActionLink("Finished studying the resources", "FinishedResources", "Learn", new { @id = Model.RoadStep.Id }, new { @class = "btn btn-primary btn-lg" })
         }
         else if (Model.StudentXRoadStep.HasGraduated())
         {
             <p>You have graduated this road step!</p>
         }
-    <hr />
+        <hr/>
+        <p class="text-success">Ask a question, propose resources or exercises, or suggest improvements for this road step:</p>
+        @Html.ActionLink("Send message", "SendMessage", new { @roadStepId = Model.RoadStep.Id }, new { @class = "btn btn-primary btn-lg" })
+        <hr />
         @{
         if (Model.RoadStep.StepResources.Count > 0)
         {
@@ -40,7 +45,7 @@
                     @foreach (var step in Model.RoadStep.StepResources)
                     {
                         <tr>
-                            <td>@step.Name</td>
+                            <td><a href="@step.Name">@step.Name</a></td>
                             <td>@step.Description</td>
                             <td>@Model.RatingFor(step)</td>
                         </tr>
@@ -63,19 +68,23 @@
                     @foreach (var exercise in Model.RoadStep.StepExercises)
                     {
                         <tr>
-                            <td>@exercise.Name</td>
-                            <td>@exercise.Description</td>
+                            <td>
+                                <p>@exercise.Name</p>
+                                <div style="padding-left: 40px;">
+                                    @Html.Raw(exercise.Description)
+                                </div>
+                            </td>
                             <td>@Model.RatingFor(exercise)</td>
                             <td>
                                 @if (Model.StudentXRoadStep != null && Model.StudentXRoadStep.LearningStatus == LearningStatus.FinishedResources)
                                 {
                                     if (Model.StudentXRoadStep.CanStartExercise(exercise))
                                     {
-                                        @Html.ActionLink("Start exercise", "StartExercise", "Learn", new {@id = exercise.Id, @roadStepId = Model.RoadStep.Id}, new {})
+                                        @Html.ActionLink("Start exercise", "StartExercise", "Learn", new {@id = exercise.Id, @roadStepId = Model.RoadStep.Id}, new { @class = "btn btn-primary btn-lg" })
                                     }
                                     else if (Model.StudentXRoadStep.CanFinishExercise(exercise))
                                     {
-                                        @Html.ActionLink("Finish exercise", "FinishExercise", "Learn", new {@id = exercise.Id, @roadStepId = Model.RoadStep.Id}, new {})
+                                        @Html.ActionLink("Finish exercise", "FinishExercise", "Learn", new {@id = exercise.Id, @roadStepId = Model.RoadStep.Id}, new { @class = "btn btn-primary btn-lg" })
                                     }
                                     else if (Model.StudentXRoadStep.IsWaitingForReview(exercise))
                                     {
@@ -88,12 +97,5 @@
                 </tbody>
             </table>
         }
-        else
-        {
-            <p>No exercises yet!</p>
-        }
     }
-    <hr/>
-        <p>Ask a question, propose resources or exercises, or suggest improvements for this road step:</p>
-        @Html.ActionLink("Send message", "SendMessage", new { @roadStepId = Model.RoadStep.Id })
 </div>

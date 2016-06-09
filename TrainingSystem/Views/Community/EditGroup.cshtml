@@ -121,13 +121,9 @@
             </tbody>
         </table>
     }
-    else
-    {
-        <p>You did not add any roads yet!</p>
-    }
 }
 
-@Html.ActionLink("Start training this group", "StartTrainingGroup", new { @id = Model.Id })
+@Html.ActionLink("Start training this group", "StartTrainingGroup", new { @id = Model.Id }, new { @class = "btn btn-primary btn-lg" })
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

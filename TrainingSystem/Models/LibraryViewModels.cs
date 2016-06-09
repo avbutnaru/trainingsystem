@@ -45,6 +45,8 @@ namespace TrainingSystem.Models
         public string Message { get; set; }
         public List<StudentResourceRating> ResourceRatings { get; set; }
         public List<StudentExercise> ExerciseRatings { get; set; }
+        public string RoadName { get; set; }
+        public string RoadMapName { get; set; }
 
         public RatingValue? RatingFor(StepResource stepResource)
         {

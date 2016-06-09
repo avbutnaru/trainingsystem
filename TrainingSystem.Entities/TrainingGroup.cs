@@ -63,7 +63,10 @@ namespace TrainingSystem.Entities
                 if (!ret.Any(p => p.SolvesNeed(trainingNeed)))
                 {
                     var solutionForNeed = DefineSolutionForNeed(trainingNeed, groupMemberWithNeed);
-                    ret.Add(solutionForNeed);
+                    if (solutionForNeed != null)
+                    {
+                        ret.Add(solutionForNeed);
+                    }
                 }
                 groupMembersRemainingWithNeed.Remove(groupMemberWithNeed);
                 groupMemberWithNeed = GetFirstGroupMemberWhoHasANeed(groupMembersRemainingWithNeed);
@@ -112,6 +115,10 @@ namespace TrainingSystem.Entities
             {
                 var roadStep = trainingNeed.RoadStep;
                 var teacher = FindTeacherToPrepareContent(roadStep);
+                if (teacher == null)
+                {
+                    return null;
+                }
                 return teacher.AddTask(TrainingTaskType.PrepareExercise, new List<RoadStep> { roadStep });
             }
             throw new NotImplementedException();

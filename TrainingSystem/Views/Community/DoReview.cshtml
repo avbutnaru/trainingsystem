@@ -8,20 +8,24 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 
 <div class="jumbotron">
-    <h3>@Model.Review.StudentExercise.StepExercise.Name</h3>
-    <hr/>
-    <p>@Model.Review.StudentExercise.StepExercise.Description</p>
+    <h3>
+        @Model.Review.StudentExercise.StepExercise.Name
+    </h3>
+    <div style="padding-left: 20px; font-size: 14px;">
+        @Html.Raw(@Model.Review.StudentExercise.StepExercise.Description)
+    </div>
     <hr />
-    <a href="/ExerciseSolution/@Model.Review.StudentExercise.FinishExerciseFileName" target="_blank">Download solution uploaded by student</a>
+
+    <a href="/ExerciseSolution/@Model.Review.StudentExercise.FinishExerciseFileName" target="_blank" class="btn btn-primary btn-lg">Download solution uploaded by student</a>
     <hr />
     @using (Html.BeginForm("SaveReview", "Community", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(m => m.ReviewContent, new {@class = "col-md-2 control-label"})
+            @Html.LabelFor(m => m.ReviewContent, "Feedback", new {@class = "col-md-2 control-label"})
             <div class="col-md-10">
-                @Html.TextAreaFor(m => m.ReviewContent, new {@class = "form-control"})
+                @Html.TextAreaFor(m => m.ReviewContent, new { style = "max-width: 800px; width: 800px; height: 300px; font-size: 14px;" })
             </div>
         </div>
         <div class="form-group">
@@ -33,7 +37,7 @@
         @Html.HiddenFor(m => m.ReviewId)
         <div class="form-group">
             <div class="col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Finish review" class="btn btn-primary btn-lg"/>
             </div>
         </div>
     }

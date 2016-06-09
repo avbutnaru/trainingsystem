@@ -14,50 +14,42 @@
             <h4>Reviews To Do</h4>
             <table class="table">
                 <tbody>
-                    @foreach (var exerciseReview in Model.ReviewsToDo)
-                    {
-                        <tr>
-                            <td>@exerciseReview.StudentExercise.StepExercise.Name</td>
-                            <td>@exerciseReview.StudentExercise.FinishExerciseComment</td>
-                            <td>
-                                @Html.ActionLink("Review", "DoReview", "Community", new { @id = exerciseReview.Id }, new {})
-                            </td>
-                        </tr>
-                    }
+                @foreach (var exerciseReview in Model.ReviewsToDo)
+                {
+                    <tr>
+                        <td>@exerciseReview.StudentExercise.StepExercise.Name</td>
+                        <td>@exerciseReview.StudentExercise.FinishExerciseComment</td>
+                        <td>
+                            @Html.ActionLink("Review", "DoReview", "Community", new {@id = exerciseReview.Id}, new {})
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
-        }
-        else
-        {
-            <p>No reviews to do yet!</p>
+            <hr />
         }
     }
-    <hr/>
     @{
         if (Model.ReviewsReceived.Count > 0)
         {
             <h4>Reviews Received</h4>
             <table class="table">
                 <tbody>
-                    @foreach (var exerciseReview in Model.ReviewsReceived)
-                    {
-                        <tr>
-                            <td>@exerciseReview.StudentExercise.StepExercise.Name</td>
-                            <td>@exerciseReview.StudentExercise.FinishExerciseComment</td>
-                            <td>
-                                @Html.ActionLink("View", "ViewReview", "Community", new { @id = exerciseReview.Id }, new { })
-                            </td>
-                        </tr>
-                    }
+                @foreach (var exerciseReview in Model.ReviewsReceived)
+                {
+                    <tr>
+                        <td>@exerciseReview.StudentExercise.StepExercise.Name</td>
+                        <td>@exerciseReview.StudentExercise.FinishExerciseComment</td>
+                        <td>
+                            @Html.ActionLink("View", "ViewReview", "Community", new {@id = exerciseReview.Id}, new {})
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
-        }
-        else
-        {
-            <p>No reviews received yet!</p>
+            <hr />
         }
     }
-    <hr />
     @{
         if (Model.TrainingGroups.Count > 0)
         {
@@ -76,10 +68,6 @@
                     }
                 </tbody>
             </table>
-        }
-        else
-        {
-            <p>No training groups created yet!</p>
         }
     }
     @Html.ActionLink("Add Training Group", "EditGroup")
@@ -110,10 +98,6 @@
                 </tbody>
             </table>
         }
-        else
-        {
-            <p>No tasks waiting in queue!</p>
-        }
     }
 
     <hr />
@@ -126,16 +110,15 @@
                     @foreach (var message in Model.TrainingMessages)
                     {
                         <tr>
-                            <td>@message.Sender.UserName</td>
+                            <td>
+                                @message.Sender.UserName
+                            </td>
                             <td>@message.Content</td>
+                            <td>@Html.ActionLink("Reply", "SendMessage", "Community", new { @class = "btn btn-primary btn-lg" })</td>
                         </tr>
                     }
                 </tbody>
             </table>
-        }
-        else
-        {
-            <p>No training messages yet!</p>
         }
     }
 </div>

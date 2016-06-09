@@ -57,7 +57,7 @@ namespace TrainingSystem.Entities
         {
             if (TaskType == TrainingTaskType.StartOneOfRoadSteps)
             {
-                return "Student " + MemberActing.UserName + " should start road step " + RoadStep.Name;
+                return "Student " + MemberActing.UserName + " should start road step \"" + RoadStep.Name + "\"";
             }
             if (TaskType == TrainingTaskType.PrepareContent)
             {
@@ -80,7 +80,7 @@ namespace TrainingSystem.Entities
             {
                 if (RoadStep != null)
                 {
-                    return "Teacher " + MemberActing.UserName + " should prepare an exercise for road step " + RoadStep.Name + " so that " + MemberReceiving.UserName + " can resume learning.";
+                    return "Teacher " + MemberActing.UserName + " should prepare an exercise for road step " + RoadStep.Name;
                 }
             }
 
@@ -124,7 +124,7 @@ namespace TrainingSystem.Entities
             }
             else if (trainingNeed.NeedsExercise)
             {
-                if (RoadStep != null && RoadStep.Id == trainingNeed.Road.Id &&
+                if (RoadStep != null && RoadStep.Id == trainingNeed.RoadStep.Id &&
                     TaskType == TrainingTaskType.PrepareExercise)
                 {
                     return true;
