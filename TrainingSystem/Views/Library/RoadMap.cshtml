@@ -3,35 +3,37 @@
     ViewBag.Title = "Road Map";
 }
 
-<h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 
 <div class="jumbotron">
-    <h3>@Model.RoadMap.Name</h3>
-    <hr/>
-    <p>@Model.RoadMap.Description</p>
+    <h2>@Model.RoadMap.Name</h2>
+    <div style="padding-left: 20px;">
+        <p>@Model.RoadMap.Description</p>
+    </div>
     <hr />
-    @Html.ActionLink("Learn", "LearnRoadMap", "Learn", new { @id = Model.RoadMap.Id }, new { })
+    @Html.ActionLink("Start Learning", "LearnRoadMap", "Learn", new { @id = Model.RoadMap.Id }, new { @class = "btn btn-primary btn-lg" })
     <hr />
     @{
         if (Model.RoadMap.RoadmapXRoads.Count > 0)
         {
             <h4>Roads</h4>
-            <table class="table">
-                <tbody>
-                    @foreach (var road in Model.RoadMap.RoadmapXRoads)
-                    {
-                        <tr>
-                            <td>@road.Road.Name</td>
-                            <td>@road.Road.Description</td>
-                            <td>
-                                @Html.ActionLink("Details", "Road", new { @id = road.Id })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <div style="padding-left: 30px;">
+                <table class="table">
+                    <tbody>
+                        @foreach (var road in Model.RoadMap.RoadmapXRoads)
+                        {
+                            <tr>
+                                <td>@road.Road.Name</td>
+                                <td>@road.Road.Description</td>
+                                <td>
+                                    @Html.ActionLink("Details", "Road", new { @id = road.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
         else
         {
@@ -39,6 +41,6 @@
         }
     }
     <hr />
-    <p>Ask a question or suggest an improvement for this road map:</p>
-    @Html.ActionLink("Send message", "SendMessage", new { @roadMapId = Model.RoadMap.Id })
+    <p class="text-success">Ask a question or suggest an improvement for this road map:</p>
+    @Html.ActionLink("Send message", "SendMessage", new { @roadMapId = Model.RoadMap.Id }, new { @class = "btn btn-primary btn-lg" })
 </div>

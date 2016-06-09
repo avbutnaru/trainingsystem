@@ -50,12 +50,11 @@
             </tbody>
         </table>
     }
-    else
-    {
-        <p>You did not add any roads yet!</p>
-    }
 }
-@Html.ActionLink("Add Road", "EditRoad", new { @roadmapId = Model.Id })
+@if (Model.Id != null)
+{
+    @Html.ActionLink("Add Road", "EditRoad", new {@roadmapId = Model.Id})
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

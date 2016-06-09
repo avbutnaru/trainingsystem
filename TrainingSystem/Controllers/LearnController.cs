@@ -43,7 +43,9 @@ namespace TrainingSystem.Controllers
 
         public ActionResult LearnRoadMap(int id)
         {
-            var roadMap = Db.RoadMaps.FirstOrDefault(p => p.Id == id);
+            var roadMap = Db.RoadMaps
+                .Include(p => p.RoadmapXRoads.Select(u => u.Road).Select(a => a.RoadXRoadSteps.Select(b => b.RoadStep)))
+                .FirstOrDefault(p => p.Id == id);
             var firstStepInRoadMap = roadMap.GetStartingStep();
 
             if (firstStepInRoadMap == null)
@@ -79,7 +81,9 @@ namespace TrainingSystem.Controllers
 
         public ActionResult LearnRoad(int id)
         {
-            var road = Db.Roads.FirstOrDefault(p => p.Id == id);
+            var road = Db.Roads
+                .Include(p => p.RoadXRoadSteps.Select(u => u.RoadStep))
+                .FirstOrDefault(p => p.Id == id);
             var firstStepInRoad = road.GetStartingStep();
 
             if (firstStepInRoad == null)

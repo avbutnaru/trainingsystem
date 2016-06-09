@@ -37,31 +37,27 @@
         <h4>Members</h4>
         <table class="table">
             <tbody>
-                @foreach (var groupMember in Model.GroupMembers)
-                {
-                    <tr>
-                        <td>@groupMember.AspNetUser.UserName</td>
-                        <td>
-                            @if (groupMember.IsTeacher)
-                            {
-                                <span>Teacher &nbsp;</span>
-                            }
-                            @if (groupMember.IsStudent)
-                            {
-                                <span>Student &nbsp;</span>
-                            }
-                        </td>
-                        <td>
-                            @Html.ActionLink("Remove", "RemoveGroupMember", new { @id = groupMember.Id, trainingGroupId = Model.Id })
-                        </td>
-                    </tr>
-                }
+            @foreach (var groupMember in Model.GroupMembers)
+            {
+                <tr>
+                    <td>@groupMember.AspNetUser.UserName</td>
+                    <td>
+                        @if (groupMember.IsTeacher)
+                        {
+                            <span>Teacher &nbsp;</span>
+                        }
+                        @if (groupMember.IsStudent)
+                        {
+                            <span>Student &nbsp;</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove", "RemoveGroupMember", new {@id = groupMember.Id, trainingGroupId = Model.Id})
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
-    }
-    else
-    {
-        <p>You did not add any members yet!</p>
     }
 }
 
@@ -123,7 +119,10 @@
     }
 }
 
-@Html.ActionLink("Start training this group", "StartTrainingGroup", new { @id = Model.Id }, new { @class = "btn btn-primary btn-lg" })
+@if (Model.GroupMembers.Count > 0)
+{
+    @Html.ActionLink("Start training this group", "StartTrainingGroup", new { @id = Model.Id }, new { @class = "btn btn-primary btn-lg" })
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
