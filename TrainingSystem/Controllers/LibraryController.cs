@@ -31,6 +31,7 @@ namespace TrainingSystem.Controllers
             var model = new RoadMainViewModel();
             model.Road = db.Roads
                 .Include(p => p.RoadXRoadSteps.Select(u => u.RoadStep))
+                .Include(p => p.RoadmapXRoads.Select(u => u.RoadMap))
                 .FirstOrDefault(p => p.Id == id);
             return View(model);
         }
